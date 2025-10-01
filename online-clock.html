@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Clock - Digital & Flip Clock with Current Time</title>
+  <meta name="description" content="Free online clock showing current time in digital and flip formats. Beautiful, accurate time display that works on all devices. No download required.">
+  <meta name="keywords" content="online clock, digital clock, flip clock, current time, time display, web clock, live clock">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/online-clock.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/online-clock.html">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Online Clock",
+    "description": "Free online clock with digital and flip display modes",
+    "url": "https://onlinealarmblogs.com/online-clock.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "featureList": [
+      "Digital Clock",
+      "Flip Clock",
+      "Current Time Display",
+      "Multiple Formats",
+      "Real-time Updates"
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+    
+    /* Premium styling for Online Clock */
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(30, 64, 175, 0.3));
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b;
+    }
+
+    body.light-mode .mode-button {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .mode-button:hover {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(30, 64, 175, 0.3);
+    }
+
+    body.light-mode .mode-button.active {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+      color: white;
+    }
+
+    body.light-mode .flip-card,
+    body.light-mode .flip-segment {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-color: rgba(30, 64, 175, 0.3);
+      color: #1e293b;
+      box-shadow: 
+        0 8px 32px rgba(30, 58, 138, 0.2),
+        inset 0 1px 0 rgba(30, 64, 175, 0.1);
+    }
+
+    body.light-mode .digital-clock {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(30, 64, 175, 0.2);
+    }
+
+    body.light-mode .digital-time {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(30, 64, 175, 0.3));
+    }
+
+    body.light-mode .current-date {
+      color: #475569;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
+    }
+
+    .floating-animation {
+      animation: floating 6s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .flip-segment {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+      border-radius: 16px;
+      box-shadow: 
+        0 8px 32px rgba(30, 58, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 0 1px rgba(59, 130, 246, 0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .flip-segment::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    /* Page flip effect with realistic shadows */
+    .flip-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.1) 0%, 
+        rgba(0, 0, 0, 0.05) 20%, 
+        transparent 50%, 
+        rgba(0, 0, 0, 0.05) 80%, 
+        rgba(0, 0, 0, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .flip-card.flipping::before {
+      opacity: 1;
+    }
+
+    /* Realistic page curl effect */
+    .flip-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 75%, 
+        transparent 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .flip-card.flipping::after {
+      opacity: 1;
+    }
+
+    .flip-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+      border-radius: 16px;
+      box-shadow: 
+        0 8px 32px rgba(30, 58, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      height: 120px;
+      width: 120px;
+      perspective: 1000px;
+    }
+
+    .flip-card.flipping {
+      transform: rotateX(-180deg);
+      box-shadow: 
+        0 20px 60px rgba(30, 58, 138, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .flip-card-front, .flip-card-back { 
+      backface-visibility: hidden; 
+      position: absolute; 
+      width: 100%; 
+      height: 100%; 
+    }
+    
+    .flip-card-back { 
+      transform: rotateX(180deg); 
+    }
+    
+    /* Enhanced flip module with depth */
+    .flip-module {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      box-shadow: 
+        0 20px 60px rgba(30, 58, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(59, 130, 246, 0.2);
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .flip-module::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      pointer-events: none;
+    }
+
+    .mode-button {
+      background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mode-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .mode-button:hover::before {
+      left: 100%;
+    }
+
+    .mode-button:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .mode-button.active {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      box-shadow: 
+        0 0 30px rgba(59, 130, 246, 0.6),
+        0 10px 25px rgba(0, 0, 0, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .glow-effect {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes pulse-glow {
+      from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+    }
+    
+    .smooth-transition {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .digital-clock {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 60px rgba(30, 58, 138, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .digital-time {
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-premium:hover::before {
+      left: 100%;
+    }
+
+    .current-date {
+      color: #e2e8f0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .clock-mode {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .clock-mode.hidden {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+
+    .clock-mode:not(.hidden) {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    #hours-front, #minutes-front, #seconds-front, #ampm-front {
+      transform: rotateX(0deg);
+      z-index: 2;
+    }
+
+    #hours-back, #minutes-back, #seconds-back, #ampm-back {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    /* Realistic page flip animations */
+    @keyframes pageFlip {
+      0% {
+        transform: rotateX(0deg);
+        box-shadow: 
+          0 8px 32px rgba(30, 58, 138, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      25% {
+        transform: rotateX(-45deg);
+        box-shadow: 
+          0 15px 40px rgba(30, 58, 138, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      50% {
+        transform: rotateX(-90deg);
+        box-shadow: 
+          0 20px 50px rgba(30, 58, 138, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 0 30px rgba(0, 0, 0, 0.2);
+      }
+      75% {
+        transform: rotateX(-135deg);
+        box-shadow: 
+          0 15px 40px rgba(30, 58, 138, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      100% {
+        transform: rotateX(-180deg);
+        box-shadow: 
+          0 8px 32px rgba(30, 58, 138, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .flip-card.flipping {
+      animation: pageFlip 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* Enhanced 3D depth for flip modules */
+    .flip-module {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      box-shadow: 
+        0 20px 60px rgba(30, 58, 138, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(59, 130, 246, 0.2);
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    /* Page edge effect */
+    .flip-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(0, 0, 0, 0.1) 15%, 
+        rgba(0, 0, 0, 0.05) 30%, 
+        transparent 50%, 
+        rgba(0, 0, 0, 0.05) 70%, 
+        rgba(0, 0, 0, 0.1) 85%, 
+        rgba(0, 0, 0, 0.2) 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .flip-card.flipping::before {
+      opacity: 1;
+    }
+
+    /* Page curl highlight effect */
+    .flip-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.15) 20%, 
+        rgba(255, 255, 255, 0.25) 40%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0.25) 60%, 
+        rgba(255, 255, 255, 0.15) 80%, 
+        transparent 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .flip-card.flipping::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white overflow-x-hidden dark-mode">
+  <!-- Back Button -->
+  <div class="fixed top-6 left-6 z-40">
+    <a href="index.html" class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span class="text-lg font-medium">Back to Home</span>
+    </a>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <div class="fixed top-6 right-6 z-40">
+    <button id="dark-mode-toggle" class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg">
+      <svg id="dark-icon" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg id="light-icon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 0012 21a9 9 0 009-9 9 9 0 00-1.646-5.646z"></path>
+      </svg>
+      <span class="text-lg font-medium">Toggle Theme</span>
+    </button>
+  </div>
+
+  <div class="max-w-6xl mx-auto p-6 pt-24">
+    <div class="min-h-screen flex flex-col items-center justify-center p-8">
+      <!-- Header with enhanced styling -->
+      <div class="text-center mb-12">
+        <h1 class="text-6xl font-bold gradient-text floating-animation mb-4">Online Clock</h1>
+        <div id="current-date" class="text-xl text-gray-300 current-date"></div>
+      </div>
+
+      <!-- Clock Mode Selection with premium styling -->
+      <div class="flex justify-center gap-6 mb-12">
+        <button onclick="showClockMode('digital')" class="mode-button active flex items-center gap-3 px-8 py-4 text-white font-semibold rounded-xl transition-all duration-400">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Digital Clock
+        </button>
+        <button onclick="showClockMode('flip')" class="mode-button flex items-center gap-3 px-8 py-4 text-white font-semibold rounded-xl transition-all duration-400">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          Flip Clock
+        </button>
+      </div>
+
+      <!-- Digital Clock with premium styling -->
+      <div id="digital-clock" class="clock-mode digital-clock p-12 rounded-3xl premium-shadow">
+        <div id="digital-time" class="text-8xl font-bold digital-time text-center">12:00:00 AM</div>
+      </div>
+
+      <!-- Flip Clock with enhanced premium design -->
+      <div id="flip-clock" class="clock-mode hidden">
+        <div class="flex flex-col items-center gap-8">
+          <!-- Time display with premium styling -->
+          <div class="flex items-center gap-6">
+            <!-- Hours -->
+            <div class="flip-module p-6 rounded-2xl premium-shadow">
+              <div class="text-center text-sm text-gray-300 mb-3 font-medium">Hours</div>
+              <div id="hours-card" class="flip-card">
+                <div id="hours-front" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">12</div>
+                <div id="hours-back" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">12</div>
+              </div>
+            </div>
+            
+            <!-- Minutes -->
+            <div class="flip-module p-6 rounded-2xl premium-shadow">
+              <div class="text-center text-sm text-gray-300 mb-3 font-medium">Minutes</div>
+              <div id="minutes-card" class="flip-card">
+                <div id="minutes-front" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">00</div>
+                <div id="minutes-back" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">00</div>
+              </div>
+            </div>
+            
+            <!-- Seconds -->
+            <div class="flip-module p-6 rounded-2xl premium-shadow">
+              <div class="text-center text-sm text-gray-300 mb-3 font-medium">Seconds</div>
+              <div id="seconds-card" class="flip-card">
+                <div id="seconds-front" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">00</div>
+                <div id="seconds-back" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">00</div>
+              </div>
+            </div>
+            
+            <!-- AM/PM -->
+            <div class="flip-module p-6 rounded-2xl premium-shadow">
+              <div class="text-center text-sm text-gray-300 mb-3 font-medium">AM/PM</div>
+              <div id="ampm-card" class="flip-card">
+                <div id="ampm-front" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">AM</div>
+                <div id="ampm-back" class="flip-segment text-7xl font-bold text-white text-center py-10 px-8">AM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Enhanced Information Section -->
+    <div class="text-center text-gray-300 max-w-3xl mx-auto">
+      <div class="glass-effect rounded-2xl p-8 shadow-2xl">
+        <h3 class="text-2xl font-bold mb-6 text-white">What Is the Online Clock?</h3>
+        <p class="mb-4 text-lg leading-relaxed">When you want to know, "What time is it?", you can use the online clock to see the current time in hours, minutes, and seconds with precision and style.</p>
+        <p class="text-lg leading-relaxed">Currently, the online clock displays time in three beautiful formats: digital clock, analog clock, and flip clock. Each mode offers a unique way to experience time. To see the time in different countries and time zones around the world, check the <a href="#" class="text-blue-400 underline hover:text-blue-300 transition-colors duration-300">world clock</a>.</p>
+      </div>
+    </div>
+    </div>
+
+  <!-- How to Use Guide Section -->
+  <div class="max-w-6xl mx-auto p-6">
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">How to Use the Online Clock</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Digital Clock -->
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-600/20 rounded-2xl p-6 border border-blue-500/20">
+          <div class="text-3xl mb-4">🕐</div>
+          <h3 class="text-xl font-bold text-blue-400 mb-4">Digital Clock Display</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Live Time:</strong> Shows current time in digital format</li>
+            <li><strong>Automatic Updates:</strong> Refreshes every second automatically</li>
+            <li><strong>Clear Display:</strong> Large, easy-to-read numbers with gradient styling</li>
+            <li><strong>24/12 Hour:</strong> Displays in your system's preferred format</li>
+            <li><strong>High Accuracy:</strong> Synchronized with your device's system time</li>
+          </ul>
+        </div>
+
+        <!-- Flip Clock -->
+        <div class="bg-gradient-to-br from-green-500/10 to-green-600/20 rounded-2xl p-6 border border-green-500/20">
+          <div class="text-3xl mb-4">📱</div>
+          <h3 class="text-xl font-bold text-green-400 mb-4">Flip Clock Animation</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Retro Style:</strong> Classic flip clock appearance with smooth animations</li>
+            <li><strong>Smooth Transitions:</strong> Beautiful flip animations every minute</li>
+            <li><strong>Visual Appeal:</strong> Nostalgic design with modern web technology</li>
+            <li><strong>Separate Digits:</strong> Individual flip panels for hours and minutes</li>
+            <li><strong>Responsive Design:</strong> Scales perfectly on all screen sizes</li>
+          </ul>
+        </div>
+
+        <!-- Display Features -->
+        <div class="bg-gradient-to-br from-purple-500/10 to-purple-600/20 rounded-2xl p-6 border border-purple-500/20">
+          <div class="text-3xl mb-4">✨</div>
+          <h3 class="text-xl font-bold text-purple-400 mb-4">Display Features</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Dark/Light Mode:</strong> Toggle between dark and light themes</li>
+            <li><strong>Glass Effect:</strong> Beautiful translucent background styling</li>
+            <li><strong>Gradient Text:</strong> Eye-catching color gradients on time display</li>
+            <li><strong>Full Screen:</strong> Can be used in full-screen mode for presentations</li>
+            <li><strong>Multiple Formats:</strong> Different clock styles to choose from</li>
+          </ul>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-600/20 rounded-2xl p-6 border border-yellow-500/20">
+          <div class="text-3xl mb-4">🎯</div>
+          <h3 class="text-xl font-bold text-yellow-400 mb-4">Perfect For</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Desktop Display:</strong> Keep open as a desktop clock widget</li>
+            <li><strong>Presentations:</strong> Display time during meetings or presentations</li>
+            <li><strong>Streaming:</strong> Show time on live streams or recordings</li>
+            <li><strong>Office Use:</strong> Large clock display for office spaces</li>
+            <li><strong>Home Use:</strong> Digital clock for kitchen, bedroom, or living room</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20">
+        <h4 class="text-lg font-bold text-blue-400 mb-3">⚡ Quick Features</h4>
+        <div class="text-gray-300 text-sm space-y-2">
+          <p><strong>Always Accurate:</strong> Time is synchronized with your device's system clock</p>
+          <p><strong>No Setup Required:</strong> Just open the page and see the current time instantly</p>
+          <p><strong>Battery Friendly:</strong> Efficient animations that don't drain device battery</p>
+          <p><strong>Multi-Device:</strong> Works perfectly on computers, tablets, and smartphones</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Enhanced clock mode management
+    let currentMode = 'digital';
+    const clockModes = document.querySelectorAll('.clock-mode');
+    const modeButtons = document.querySelectorAll('.mode-button');
+    
+    function showClockMode(mode) {
+      // Hide all clock modes
+      document.querySelectorAll('.clock-mode').forEach(el => el.classList.add('hidden'));
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
+      
+      // Show selected mode and activate button
+      if (mode === 'digital') {
+        document.getElementById('digital-clock').classList.remove('hidden');
+        document.querySelector('.mode-button').classList.add('active');
+      } else if (mode === 'flip') {
+        document.getElementById('flip-clock').classList.remove('hidden');
+        document.querySelectorAll('.mode-button')[1].classList.add('active');
+        // Update flip clock immediately when switching to it
+        setTimeout(() => updateFlipClock(), 100);
+      }
+    }
+    
+    // Update clock every second
+    setInterval(() => {
+      updateDigitalClock();
+      updateFlipClock();
+      updateDate();
+    }, 1000);
+
+    // Update date
+    function updateDate() {
+      const now = new Date();
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      const dateString = now.toLocaleDateString('en-US', options);
+      document.getElementById('current-date').textContent = dateString;
+    }
+
+    // Update digital clock
+    function updateDigitalClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      
+      const displayHours = hours % 12 || 12;
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      document.getElementById('digital-time').textContent = 
+        `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+    }
+
+    // Update flip clock
+    function updateFlipClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      
+      const displayHours = hours % 12 || 12;
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      console.log('Updating flip clock:', { displayHours, minutes, seconds, ampm });
+      
+      // Check if flip clock is visible
+      const flipClock = document.getElementById('flip-clock');
+      if (flipClock.classList.contains('hidden')) {
+        console.log('Flip clock is hidden, skipping update');
+        return;
+      }
+      
+      // Update hours
+      updateFlipSegment('hours', displayHours.toString().padStart(2, '0'));
+      
+      // Update minutes
+      updateFlipSegment('minutes', minutes.toString().padStart(2, '0'));
+      
+      // Update seconds
+      updateFlipSegment('seconds', seconds.toString().padStart(2, '0'));
+      
+      // Update AM/PM
+      updateFlipSegment('ampm', ampm);
+    }
+
+    function updateFlipSegment(type, newValue) {
+      const front = document.querySelector(`#${type}-front`);
+      const back = document.querySelector(`#${type}-back`);
+      const card = document.querySelector(`#${type}-card`);
+      
+      console.log(`Updating ${type}:`, { 
+        front: front?.textContent, 
+        newValue, 
+        frontExists: !!front, 
+        backExists: !!back, 
+        cardExists: !!card,
+        frontElement: front,
+        backElement: back,
+        cardElement: card
+      });
+      
+      if (front && back && card && front.textContent !== newValue) {
+        console.log(`Actually updating ${type} from "${front.textContent}" to "${newValue}"`);
+        
+        // Set the new value on the back element
+        back.textContent = newValue;
+        
+        // Add flipping class to trigger animation
+        card.classList.add('flipping');
+        
+        // After the flip animation completes, update the front and reset
+        setTimeout(() => {
+          front.textContent = newValue;
+          card.classList.remove('flipping');
+          console.log(`${type} updated successfully`);
+        }, 600); // Match the CSS transition duration for realistic flip
+      } else {
+        console.log(`Skipping ${type} update:`, {
+          frontExists: !!front,
+          backExists: !!back,
+          cardExists: !!card,
+          valuesMatch: front?.textContent === newValue
+        });
+      }
+    }
+
+    // Initialize page
+    function initializePage() {
+      updateDigitalClock();
+      updateFlipClock();
+      updateDate();
+    }
+
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkIcon = document.getElementById('dark-icon');
+    const lightIcon = document.getElementById('light-icon');
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.classList.contains('dark-mode');
+      
+      if (isDark) {
+        // Switch to light mode
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        
+        // Update icons and text
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      } else {
+        // Switch to dark mode
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        
+        // Update icons and text
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      }
+    }
+
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+
+    // Theme on load
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        // Light mode
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+        }
+      } else {
+        // Dark mode (default)
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        }
+      }
+    })();
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializePage);
+
+    // Update copyright year
+    function updateCurrentYear() {
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+  </script>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold gradient-text mb-4">Online Alarm</h3>
+          <p class="text-gray-300 mb-4 leading-relaxed">
+            Free online time management tools including alarm clock, timer, stopwatch, countdown, and world clock. 
+            No download required - works on all devices with precision timing.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Tools</h4>
+          <ul class="space-y-2">
+            <li><a href="online-alarm.html" class="text-gray-200 hover:text-blue-400 transition-colors">Alarm Clock</a></li>
+            <li><a href="online-timer.html" class="text-gray-200 hover:text-blue-400 transition-colors">Timer</a></li>
+            <li><a href="online-stopwatch.html" class="text-gray-200 hover:text-blue-400 transition-colors">Stopwatch</a></li>
+            <li><a href="online-countdown.html" class="text-gray-200 hover:text-blue-400 transition-colors">Countdown</a></li>
+            <li><a href="world-clock.html" class="text-gray-200 hover:text-blue-400 transition-colors">World Clock</a></li>
+            <li><a href="date-calculator.html" class="text-gray-200 hover:text-blue-400 transition-colors">Date Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Legal -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact & Support</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © <span id="current-year"></span> Online Alarm. All rights reserved. Free online time tools for everyone.
+        </p>
+        <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+          <a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms</a>
+          <a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

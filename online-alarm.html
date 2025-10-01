@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Alarm Clock - Free Web Alarm with Snooze & Multiple Alarms</title>
+  <meta name="description" content="Set free online alarms with custom sounds, snooze function, and multiple alarms. No download required. Reliable web-based alarm clock that works on all devices.">
+  <meta name="keywords" content="online alarm clock, web alarm, free alarm clock, multiple alarms, snooze alarm, wake up alarm, browser alarm, alarm with sound">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/online-alarm.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/online-alarm.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://onlinealarmblogs.com/online-alarm.html">
+  <meta property="og:title" content="Online Alarm Clock - Free Web Alarm">
+  <meta property="og:description" content="Set multiple alarms with snooze function. Reliable online alarm clock with custom sounds that works in your browser. No download required.">
+  <meta property="og:image" content="https://onlinealarmblogs.com/images/alarm-og-image.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://onlinealarmblogs.com/online-alarm.html">
+  <meta property="twitter:title" content="Online Alarm Clock - Free Web Alarm">
+  <meta property="twitter:description" content="Set multiple alarms with snooze function. Reliable online alarm clock with custom sounds that works in your browser.">
+  <meta property="twitter:image" content="https://onlinealarmblogs.com/images/alarm-twitter-image.png">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Online Alarm Clock",
+    "description": "Free online alarm clock with multiple alarms, snooze function, and custom sounds",
+    "url": "https://onlinealarmblogs.com/online-alarm.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "featureList": [
+      "Multiple Alarms",
+      "Snooze Function",
+      "Custom Alarm Sounds",
+      "Browser-based",
+      "No Download Required",
+      "Works on All Devices"
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Dark mode styles */
+    .dark body {
+      background: linear-gradient(135deg, #000000 0%, #0f0f23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .dark .glass-effect {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .dark .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .floating {
+      animation: floating 6s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .glow {
+      filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+    }
+
+    .clock-glow {
+      filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.6));
+    }
+
+    .input-premium {
+      background: rgba(31, 41, 55, 0.8);
+      border: 1px solid rgba(75, 85, 99, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .dark .input-premium {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .alarm-card {
+      background: rgba(31, 41, 55, 0.6);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+      backdrop-filter: blur(15px);
+    }
+
+    .dark .alarm-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(75, 85, 99, 0.2);
+    }
+
+    .modal-premium {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+
+    .dark .modal-premium {
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid rgba(75, 85, 99, 0.2);
+    }
+
+    .pulse-alarm {
+      animation: pulse-alarm 2s infinite;
+    }
+
+    @keyframes pulse-alarm {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Volume slider styling */
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: linear-gradient(to right, #3b82f6, #8b5cf6);
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Dark mode form element styling */
+    .dark-mode-input {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    .dark-mode-input:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Date and datetime-local input styling for dark mode */
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"] {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    input[type="date"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="time"]:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Number input styling for dark mode */
+    input[type="number"] {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    input[type="number"]:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 82, 246, 0.1) !important;
+    }
+
+    /* Select dropdown styling for dark mode */
+    select {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    select:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Calendar icon styling */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0) !important;
+      opacity: 1 !important;
+    }
+
+    /* Range slider styling for dark mode */
+    input[type="range"] {
+      background: #e5e7eb !important;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      background: #3b82f6 !important;
+      border: 2px solid white !important;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      background: #3b82f6 !important;
+      border: 2px solid white !important;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(30, 64, 175, 0.3));
+    }
+
+    body.light-mode .input-premium {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .alarm-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .modal-premium {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .btn-premium {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+      border: 1px solid rgba(30, 64, 175, 0.3);
+      color: white;
+    }
+
+    /* Light mode text colors */
+    body.light-mode .text-gray-300 {
+      color: #475569;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode .text-gray-500 {
+      color: #6b7280;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b;
+    }
+
+    /* Light mode form elements */
+    body.light-mode input[type="text"],
+    body.light-mode input[type="time"],
+    body.light-mode input[type="number"],
+    body.light-mode select {
+      background: #ffffff !important;
+      color: #1e293b !important;
+      border-color: #d1d5db !important;
+    }
+
+    body.light-mode input[type="text"]:focus,
+    body.light-mode input[type="time"]:focus,
+    body.light-mode input[type="number"]:focus,
+    body.light-mode select:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Light mode modals */
+    body.light-mode .bg-gray-800 {
+      background: #ffffff;
+      color: #1e293b;
+    }
+
+    /* Light mode footer */
+    body.light-mode footer {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      color: #475569;
+    }
+
+    body.light-mode footer .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode footer .hover\:text-blue-400:hover {
+      color: #1e40af;
+    }
+
+    /* Light mode button colors */
+    body.light-mode .bg-red-600 {
+      background: #dc2626;
+    }
+
+    body.light-mode .bg-blue-600 {
+      background: #2563eb;
+    }
+
+    body.light-mode .bg-green-600 {
+      background: #16a34a;
+    }
+
+    body.light-mode .bg-purple-600 {
+      background: #9333ea;
+    }
+
+    body.light-mode .bg-yellow-600 {
+      background: #ca8a04;
+    }
+
+    body.light-mode .bg-gray-600 {
+      background: #4b5563;
+    }
+
+    body.light-mode .bg-orange-600 {
+      background: #ea580c;
+    }
+
+    body.light-mode .bg-indigo-600 {
+      background: #4f46e5;
+    }
+
+    body.light-mode .bg-emerald-600 {
+      background: #059669;
+    }
+
+    /* Light mode button hover states */
+    body.light-mode .hover\:bg-red-700:hover {
+      background: #b91c1c;
+    }
+
+    body.light-mode .hover\:bg-blue-700:hover {
+      background: #1d4ed8;
+    }
+
+    body.light-mode .hover\:bg-green-700:hover {
+      background: #15803d;
+    }
+
+    body.light-mode .hover\:bg-purple-700:hover {
+      background: #7c3aed;
+    }
+
+    body.light-mode .hover\:bg-yellow-700:hover {
+      background: #a16207;
+    }
+
+    body.light-mode .hover\:bg-gray-700:hover {
+      background: #374151;
+    }
+
+    body.light-mode .hover\:bg-orange-700:hover {
+      background: #c2410c;
+    }
+
+    body.light-mode .hover\:bg-indigo-700:hover {
+      background: #4338ca;
+    }
+
+    body.light-mode .hover\:bg-emerald-700:hover {
+      background: #047857;
+    }
+
+    /* Light mode status messages */
+    body.light-mode .text-red-500 {
+      color: #dc2626;
+    }
+
+    body.light-mode .text-green-500 {
+      color: #16a34a;
+    }
+
+    body.light-mode .text-blue-500 {
+      color: #2563eb;
+    }
+
+    body.light-mode .text-yellow-500 {
+      color: #ca8a04;
+    }
+
+    body.light-mode .text-orange-500 {
+      color: #ea580c;
+    }
+
+    body.light-mode .text-purple-500 {
+      color: #9333ea;
+    }
+
+    body.light-mode .text-indigo-500 {
+      color: #4f46e5;
+    }
+
+    body.light-mode .text-emerald-500 {
+      color: #059669;
+    }
+
+    /* Light mode transitions */
+    body.light-mode * {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Light mode back button and theme toggle */
+    body.light-mode .back-button {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      color: #1e293b !important;
+    }
+
+    body.light-mode .back-button:hover {
+      background: rgba(0, 0, 0, 0.05) !important;
+      border-color: rgba(30, 64, 175, 0.3) !important;
+    }
+
+    body.light-mode #dark-mode-toggle {
+      background: rgba(107, 114, 128, 0.8) !important;
+      border-color: rgba(107, 114, 128, 0.5) !important;
+      color: white !important;
+    }
+
+    body.light-mode #dark-mode-toggle:hover {
+      background: rgba(75, 85, 99, 0.8) !important;
+      border-color: rgba(75, 85, 99, 0.5) !important;
+    }
+
+    /* Light mode sidebar */
+    body.light-mode #sidebar {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode #sidebar .bg-gray-800\/50 {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-mode #sidebar .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode #sidebar .hover\:bg-gray-800\/50:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Light mode sidebar toggle button */
+    body.light-mode #sidebar-toggle {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      color: #1e293b !important;
+    }
+
+    body.light-mode #sidebar-toggle:hover {
+      background: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Light mode backdrop */
+    body.light-mode #sidebar-backdrop {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Light mode sidebar close button */
+    body.light-mode #sidebar-close {
+      color: #64748b;
+    }
+
+    body.light-mode #sidebar-close:hover {
+      color: #1e293b;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Light mode sidebar links */
+    body.light-mode #sidebar a {
+      color: #64748b;
+    }
+
+    body.light-mode #sidebar a:hover {
+      color: #1e293b;
+    }
+
+    /* Light mode sidebar feature links */
+    body.light-mode #sidebar .hover\:text-red-400:hover {
+      color: #dc2626;
+    }
+
+    body.light-mode #sidebar .hover\:text-blue-400:hover {
+      color: #1e40af;
+    }
+
+    body.light-mode #sidebar .hover\:text-green-400:hover {
+      color: #16a34a;
+    }
+
+    body.light-mode #sidebar .hover\:text-purple-400:hover {
+      color: #9333ea;
+    }
+
+    body.light-mode #sidebar .hover\:text-indigo-400:hover {
+      color: #4f46e5;
+    }
+
+    body.light-mode #sidebar .hover\:text-emerald-400:hover {
+      color: #059669;
+    }
+
+    body.light-mode #sidebar .hover\:text-orange-400:hover {
+      color: #ea580c;
+    }
+
+    /* Mobile-specific improvements */
+    @media (max-width: 640px) {
+      /* Improve touch targets */
+      .alarm-card, .glass-effect {
+        min-height: 44px;
+      }
+      
+      /* Better spacing for mobile */
+      .premium-shadow {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      /* Optimize clock display for mobile */
+      #alarm-clock {
+        font-size: 3rem;
+        line-height: 1.1;
+      }
+      
+      /* Improve button spacing */
+      button, .btn {
+        min-height: 44px;
+        padding: 12px 16px;
+      }
+      
+      /* Better input field sizing */
+      input, select {
+        min-height: 44px;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      /* Improve sidebar width for mobile */
+      #sidebar {
+        width: 85vw;
+        max-width: 320px;
+      }
+      
+      /* Better form layout for mobile */
+      .grid {
+        gap: 1rem;
+      }
+    }
+
+    /* Tablet improvements */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      #alarm-clock {
+        font-size: 5rem;
+      }
+      
+      .alarm-card {
+        min-height: 200px;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .alarm-card:hover {
+        transform: none;
+      }
+      
+      .alarm-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white dark-mode">
+  <!-- Left Sidebar Navigation -->
+  <div id="sidebar" class="fixed left-0 top-0 h-full w-72 sm:w-80 bg-gray-900/90 backdrop-blur-lg border-r border-gray-700/50 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="p-6">
+      <!-- Close Button -->
+      <div class="flex justify-end mb-4">
+        <button id="sidebar-close" class="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-800/50">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Logo/Title -->
+      <div class="mb-8">
+        <h2 class="text-xl font-bold gradient-text">Quick Nav</h2>
+        <p class="text-sm text-gray-400">Fast Access</p>
+      </div>
+      
+      <!-- Navigation Grid -->
+      <div class="space-y-4">
+        <!-- Current Time Card -->
+        <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
+          <div class="text-center">
+            <div class="text-2xl font-mono text-blue-400" id="sidebar-time">--:--:--</div>
+            <div class="text-xs text-gray-400" id="sidebar-date">--</div>
+          </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <a href="index.html" class="block bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 rounded-xl p-4 transition-all duration-300 hover:scale-105 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              <span class="text-white font-medium">Home</span>
+            </div>
+            <svg class="w-5 h-5 text-blue-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+        </a>
+        
+        <!-- Feature Pages Section -->
+        <div class="mt-8">
+          <h3 class="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Feature Pages</h3>
+          <div class="space-y-3">
+            <a href="online-alarm.html" class="block bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 rounded-xl p-3 transition-all duration-300 hover:scale-105 group">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-white text-sm font-medium">Online Alarm</span>
+                </div>
+                <svg class="w-4 h-4 text-red-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <a href="online-timer.html" class="block bg-green-600/20 hover:bg-green-600/30 border border-green-500/30 rounded-xl p-3 transition-all duration-300 hover:scale-105 group">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-white text-sm font-medium">Online Timer</span>
+                </div>
+                <svg class="w-4 h-4 text-green-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <a href="online-countdown.html" class="block bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 rounded-xl p-3 transition-all duration-300 hover:scale-105 group">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <span class="text-white text-sm font-medium">Online Countdown</span>
+                </div>
+                <svg class="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <a href="online-stopwatch.html" class="block bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-xl p-3 transition-all duration-300 hover:scale-105 group">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-indigo-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  <span class="text-white text-sm font-medium">Online Stopwatch</span>
+                </div>
+                <svg class="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <a href="online-clock.html" class="block bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 rounded-xl p-3 transition-all duration-300 hover:scale-105 group">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-emerald-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span class="text-white text-sm font-medium">Online Clock</span>
+                </div>
+                <svg class="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+
+  <!-- Sidebar Toggle Button -->
+  <div class="fixed top-4 left-4 z-40">
+    <button id="sidebar-toggle" class="bg-gray-900/90 backdrop-blur-lg border border-gray-700/50 text-white p-3 rounded-xl hover:bg-gray-800/90 transition-all duration-300 hover:scale-105 shadow-lg">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Back Button -->
+  <div class="fixed top-6 left-20 z-40">
+    <a href="index.html" class="back-button bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span class="text-lg font-medium">Back to Home</span>
+    </a>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <div class="fixed top-6 right-6 z-40">
+    <button id="dark-mode-toggle" class="bg-gray-600/80 hover:bg-gray-500/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-500/50 hover:border-gray-400/50 shadow-lg">
+      <svg id="dark-icon" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg id="light-icon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 0012 21a9 9 0 009-9 9 9 0 00-1.646-5.646z"></path>
+      </svg>
+      <span class="text-lg font-medium" id="theme-text">Dark Mode</span>
+    </button>
+  </div>
+
+  <div class="max-w-4xl mx-auto p-4 sm:p-6 pt-20">
+    <!-- Header Section -->
+    <div class="text-center mb-8 sm:mb-12 px-4">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 gradient-text floating">
+        Online Alarm Clock
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        Set premium alarms with crystal-clear sounds, manage your reminders, and never miss an important moment with our advanced notification system.
+      </p>
+    </div>
+
+    <!-- Audio Setup Instructions -->
+    <div class="glass-effect rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 premium-shadow border-l-4 border-blue-500">
+      <div class="flex items-start space-x-3 sm:space-x-4">
+        <div class="text-2xl sm:text-3xl">🔊</div>
+        <div>
+          <h3 class="text-base sm:text-lg font-semibold text-blue-400 mb-2">Audio Setup Required</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            To hear alarm sounds, please ensure your browser allows audio playback and your device volume is turned on. 
+            Click anywhere on the page or use the "Test Alarm Sound" button below to enable audio functionality.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Time Display -->
+    <div class="glass-effect rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-8 sm:mb-12 text-center premium-shadow">
+      <div class="text-center text-xl sm:text-2xl font-medium mb-4 sm:mb-6 text-gray-300" id="alarm-date"></div>
+      <div class="flex justify-center items-end mb-4">
+        <span id="alarm-clock" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-widest clock-glow text-blue-400"></span>
+        <span id="alarm-ampm" class="text-2xl sm:text-3xl ml-2 sm:ml-4 self-end mb-2 sm:mb-4 text-blue-300 font-semibold"></span>
+      </div>
+      <div class="w-20 sm:w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+      <div class="mt-4 sm:mt-6 text-gray-300 text-base sm:text-lg">
+        <p>Real-time digital clock display with precision timing</p>
+        <p class="text-xs sm:text-sm text-gray-400 mt-2">Accurate to the millisecond • Updates every second • 12/24 hour format support</p>
+      </div>
+    </div>
+
+    <!-- Alarm Form Section -->
+    <div class="glass-effect rounded-3xl p-8 mb-12 premium-shadow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Set New Alarm</h2>
+              <div class="mb-6 text-center text-gray-300">
+          <p class="text-lg mb-2">Create personalized alarms with custom sounds and labels</p>
+          <p class="text-sm text-gray-400">Set multiple alarms • Choose from 22 premium sounds • Add descriptive labels • 12/24 hour format</p>
+          <p class="text-sm text-yellow-400 mt-2">⚠️ Alarm audio loops continuously until you stop or snooze the alarm</p>
+        </div>
+      <form id="alarm-set-form" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="space-y-2">
+            <label for="alarm-hour" class="text-sm font-medium text-gray-300">Hours</label>
+            <select id="alarm-hour" class="input-premium w-full rounded-xl p-3 text-white focus:outline-none">
+              <option value="" disabled selected>Select Hour</option>
+              <!-- JS populates -->
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label for="alarm-minute" class="text-sm font-medium text-gray-300">Minutes</label>
+            <select id="alarm-minute" class="input-premium w-full rounded-xl p-3 text-white focus:outline-none">
+              <option value="" disabled selected>Select Minute</option>
+              <!-- JS populates -->
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label for="alarm-ampm" class="text-sm font-medium text-gray-300">AM/PM</label>
+            <select id="alarm-ampm" class="input-premium w-full rounded-xl p-3 text-white focus:outline-none">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label for="alarm-label" class="text-sm font-medium text-gray-300">Alarm Name</label>
+            <input id="alarm-label" type="text" maxlength="32" placeholder="e.g. Wake up, Meeting, Gym, Medication, Exercise..." 
+                   class="input-premium w-full rounded-xl p-3 text-white placeholder-gray-400 focus:outline-none"/>
+          </div>
+          <div class="space-y-2">
+            <label for="alarm-sound" class="text-sm font-medium text-gray-300">Alarm Sound</label>
+            <select id="alarm-sound" class="input-premium w-full rounded-xl p-3 text-white focus:outline-none">
+                <option value="" disabled>Choose Alarm Sound</option>
+                <option value="mixkit-classic-alarm-995.wav" selected>⏰ Classic Alarm</option>
+                <option value="mixkit-alert-alarm-1005.wav">🚨 Alert Alarm</option>
+                <option value="mixkit-angry-dragon-growl-309.wav">🐉 Dragon Growl</option>
+                <option value="mixkit-arabian-mystery-harp-notification-2489.wav">🎵 Arabian Harp</option>
+                <option value="mixkit-battleship-alarm-1001.wav">🚢 Battleship Alarm</option>
+                <option value="mixkit-cartoon-kitty-begging-meow-92.wav">🐱 Kitty Meow</option>
+                <option value="mixkit-classic-alarm-995.wav">⏰ Classic Alarm</option>
+                <option value="mixkit-classic-winner-alarm-1997.wav">🏆 Winner Alarm</option>
+                <option value="mixkit-cow-moo-1744.wav">🐄 Cow Moo</option>
+                <option value="mixkit-critical-alarm-1004.wav">🚨 Critical Alarm</option>
+                <option value="mixkit-digital-clock-digital-alarm-buzzer-992.wav">📱 Digital Buzzer</option>
+                <option value="mixkit-dog-barking-twice-1.wav">🐕 Dog Bark</option>
+                <option value="mixkit-facility-alarm-sound-999.wav">🏭 Facility Alarm</option>
+                <option value="mixkit-horde-of-barking-dogs-60.wav">🐕🐕 Dog Pack</option>
+                <option value="mixkit-little-baby-sneeze-2214.wav">👶 Baby Sneeze</option>
+                <option value="mixkit-little-birds-singing-in-the-trees-17.wav">🐦 Birds Singing</option>
+                <option value="mixkit-morning-clock-alarm-1003.wav">🌅 Morning Alarm</option>
+                <option value="mixkit-retro-game-emergency-alarm-1000.wav">🎮 Retro Game</option>
+                <option value="mixkit-rooster-crowing-in-the-morning-2462.wav">🐓 Rooster Crow</option>
+                <option value="mixkit-scared-horse-neighing-85.wav">🐎 Horse Neigh</option>
+                <option value="mixkit-security-facility-breach-alarm-994.wav">🔒 Security Breach</option>
+                <option value="mixkit-slot-machine-win-alarm-1995.wav">🎰 Slot Machine Win</option>
+                <option value="mixkit-sound-alert-in-hall-1006.wav">🏢 Hall Alert</option>
+                <option value="mixkit-wolf-howling-1775.wav">🐺 Wolf Howl</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label for="alarm-volume" class="text-sm font-medium text-gray-300">Volume</label>
+            <div class="flex items-center space-x-3">
+              <span class="text-xs text-gray-400">🔇</span>
+              <input type="range" id="alarm-volume" min="0.1" max="1.0" step="0.1" value="0.9" 
+                     class="flex-1 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                     title="Adjust alarm volume from 10% to 100%">
+              <span class="text-xs text-gray-400">🔊</span>
+            </div>
+            <div class="text-xs text-gray-400 text-center" id="volume-display">90%</div>
+            <div class="text-xs text-gray-400 text-center">Drag to adjust volume level</div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-premium w-full rounded-xl py-4 text-white font-semibold text-lg glow">
+          ⏰ Set Alarm
+        </button>
+      </form>
+    </div>
+    
+    <!-- Test Sound Section -->
+    <div class="text-center mb-12">
+      <div class="mb-6 text-gray-300">
+        <p class="text-lg mb-2">Preview alarm sounds before setting your alarm</p>
+        <p class="text-sm text-gray-400">Test all 22 premium sounds • Ensure audio works • Choose your favorite</p>
+        <div id="audio-status" class="mt-4 p-3 rounded-xl bg-blue-500/20 border border-blue-400/30 hidden">
+          <p class="text-sm text-blue-300">🔊 Audio system ready! Click "Test Alarm Sound" to preview sounds.</p>
+        </div>
+        <div id="audio-warning" class="mt-4 p-3 rounded-xl bg-yellow-500/20 border border-yellow-400/30 hidden">
+          <p class="text-sm text-yellow-300">⚠️ Audio may be muted. Check your browser settings and volume.</p>
+        </div>
+        <div id="audio-placeholder" class="mt-4 p-3 rounded-xl bg-gray-500/20 border border-gray-400/30">
+          <p class="text-sm text-gray-300">🎵 Select a sound above and click "Test Alarm Sound" to preview</p>
+        </div>
+      </div>
+      <div class="flex gap-4 justify-center">
+        <button id="test-sound-btn" class="glass-effect rounded-2xl px-8 py-4 premium-shadow hover:scale-105 transition-all duration-300 group">
+          <span class="text-xl font-semibold text-green-400 group-hover:text-green-300 transition-colors">
+            🔊 Test Alarm Sound
+          </span>
+        </button>
+        <a href="enhanced-audio-test.html" class="glass-effect rounded-2xl px-8 py-4 premium-shadow hover:scale-105 transition-all duration-300 group">
+          <span class="text-xl font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
+            🎵 Enhanced Audio Test
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Active Alarms Section -->
+    <div class="glass-effect rounded-3xl p-8 mb-12 premium-shadow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Active Alarms</h2>
+      <div class="mb-6 text-center text-gray-300">
+        <p class="text-lg mb-2">Monitor and control all your currently running alarms</p>
+        <p class="text-sm text-gray-400">Real-time status • Quick controls • Time remaining • Sound management</p>
+      </div>
+      <div id="alarms-list" class="space-y-4">
+        <div class="text-center text-gray-400 py-8">
+          <div class="text-4xl mb-4">🔕</div>
+          <p class="text-lg">No alarms set yet</p>
+          <p class="text-sm text-gray-500">Set your first alarm using the form above</p>
+          <div class="mt-4 text-xs text-gray-600">
+            <p>• Choose time, add label, select sound</p>
+            <p>• Test sounds before setting alarms</p>
+            <p>• Manage multiple alarms easily</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alarm Data Section -->
+    <div class="glass-effect rounded-3xl p-8 premium-shadow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Alarm History</h2>
+      <div class="mb-6 text-center text-gray-300">
+        <p class="text-lg mb-2">Track all your alarm activities and export data for analysis</p>
+        <p class="text-sm text-gray-400">Complete history • CSV export • Performance tracking • Usage analytics</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left">
+          <thead>
+            <tr class="border-b border-gray-700">
+              <th class="px-4 py-3 text-gray-300 font-semibold">#</th>
+              <th class="px-4 py-3 text-gray-300 font-semibold">Name</th>
+              <th class="px-4 py-3 text-gray-300 font-semibold">Alarm Time</th>
+              <th class="px-4 py-3 text-gray-300 font-semibold">Started</th>
+              <th class="px-4 py-3 text-gray-300 font-semibold">Stopped</th>
+            </tr>
+          </thead>
+          <tbody id="alarm-data-table" class="text-gray-300">
+            <tr>
+              <td colspan="5" class="text-center text-gray-400 py-8">
+                <div class="text-3xl mb-3">📊</div>
+                <p class="text-lg">No alarm history yet</p>
+                <p class="text-sm text-gray-500">Alarm history will appear here after you use alarms</p>
+                <div class="mt-3 text-xs text-gray-600">
+                  <p>• Set and stop alarms to build history</p>
+                  <p>• Export data to CSV for analysis</p>
+                  <p>• Track your alarm usage patterns</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex gap-4 mt-6">
+        <button id="export-csv" class="flex-1 glass-effect border border-green-500 text-green-400 rounded-xl py-3 hover:bg-green-500 hover:text-white transition-all duration-300 font-semibold">
+          📊 Export to CSV
+        </button>
+        <button id="clear-data" class="flex-1 glass-effect border border-red-500 text-red-400 rounded-xl py-3 hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold">
+          🗑️ Clear Data
+        </button>
+      </div>
+    </div>
+
+    <!-- How to Use Guide Section -->
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">How to Use the Online Alarm Clock</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Quick Start Guide -->
+        <div class="bg-gradient-to-br from-red-500/10 to-red-600/20 rounded-2xl p-6 border border-red-500/20">
+          <div class="text-3xl mb-4">🚀</div>
+          <h3 class="text-xl font-bold text-red-400 mb-4">Quick Start</h3>
+          <ol class="text-gray-300 space-y-3 text-sm list-decimal list-inside">
+            <li><strong>Set Time:</strong> Click on the time picker and select your desired alarm time</li>
+            <li><strong>Add Label:</strong> Enter a descriptive label (optional) like "Wake up" or "Meeting"</li>
+            <li><strong>Choose Sound:</strong> Select from available alarm sounds or use default</li>
+            <li><strong>Set Alarm:</strong> Click the "Set Alarm" button to activate</li>
+            <li><strong>Keep Tab Open:</strong> Leave this browser tab open for the alarm to work</li>
+          </ol>
+        </div>
+
+        <!-- Advanced Features -->
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-600/20 rounded-2xl p-6 border border-blue-500/20">
+          <div class="text-3xl mb-4">⚙️</div>
+          <h3 class="text-xl font-bold text-blue-400 mb-4">Advanced Features</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Multiple Alarms:</strong> Set unlimited alarms for different times</li>
+            <li><strong>Snooze Function:</strong> Enable snooze to delay alarm by 5-10 minutes</li>
+            <li><strong>Recurring Alarms:</strong> Set daily, weekly, or custom repeating alarms</li>
+            <li><strong>Custom Sounds:</strong> Upload your own alarm sounds (coming soon)</li>
+            <li><strong>Dark/Light Mode:</strong> Toggle between themes using the top-right button</li>
+          </ul>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-600/20 rounded-2xl p-6 border border-yellow-500/20">
+          <div class="text-3xl mb-4">🔧</div>
+          <h3 class="text-xl font-bold text-yellow-400 mb-4">Troubleshooting</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>No Sound:</strong> Check device volume and browser sound permissions</li>
+            <li><strong>Alarm Missed:</strong> Ensure browser tab stays open and active</li>
+            <li><strong>Wrong Time:</strong> Check your device's time zone settings</li>
+            <li><strong>Browser Issues:</strong> Try refreshing or using a different browser</li>
+          </ul>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="bg-gradient-to-br from-green-500/10 to-green-600/20 rounded-2xl p-6 border border-green-500/20">
+          <div class="text-3xl mb-4">✅</div>
+          <h3 class="text-xl font-bold text-green-400 mb-4">Best Practices</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Test First:</strong> Set a test alarm 1-2 minutes ahead to verify it works</li>
+            <li><strong>Backup Alarm:</strong> Always have a backup alarm on your phone</li>
+            <li><strong>Stable Internet:</strong> Ensure reliable internet connection</li>
+            <li><strong>Browser Settings:</strong> Allow notifications for this site</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center bg-gradient-to-r from-red-500/10 to-blue-500/10 rounded-2xl p-6 border border-red-500/20">
+        <h4 class="text-lg font-bold text-red-400 mb-3">⚠️ Important Notes</h4>
+        <div class="text-gray-300 text-sm space-y-2">
+          <p><strong>Browser Requirement:</strong> Keep this browser tab open and your computer/device active for alarms to function properly.</p>
+          <p><strong>Sound Permissions:</strong> Click "Allow" when prompted for sound notifications to ensure alarm audio works.</p>
+          <p><strong>Time Accuracy:</strong> Our alarm uses your device's system time, so ensure your device clock is accurate.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comprehensive Information Section -->
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">About Online Alarm Clock</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <h3 class="text-xl font-bold text-blue-400 mb-4">🎯 What is an Online Alarm Clock?</h3>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            An online alarm clock is a web-based tool that allows you to set, manage, and monitor alarms directly in your browser. 
+            Unlike traditional alarm clocks, online alarm clocks offer advanced features like multiple alarm support, custom sounds, 
+            snooze functionality, and comprehensive alarm history tracking.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Our premium online alarm clock provides a professional-grade solution for personal and business use, with features 
+            that rival dedicated alarm applications while maintaining the convenience of browser-based access.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold text-green-400 mb-4">✨ Key Features & Benefits</h3>
+          <ul class="text-gray-300 space-y-2">
+            <li>• <strong>Multiple Alarms:</strong> Set unlimited alarms with different times and labels</li>
+            <li>• <strong>Premium Sounds:</strong> Choose from 22 high-quality alarm sounds</li>
+            <li>• <strong>Snooze Function:</strong> Built-in snooze with customizable duration</li>
+            <li>• <strong>Real-time Display:</strong> Accurate clock with millisecond precision</li>
+            <li>• <strong>Data Export:</strong> Export alarm history to CSV for analysis</li>
+            <li>• <strong>Cross-platform:</strong> Works on all devices and browsers</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <h3 class="text-xl font-bold text-purple-400 mb-4">🔧 How to Use Online Alarm Clock</h3>
+          <ol class="text-gray-300 space-y-2 list-decimal list-inside">
+            <li><strong>Set Time:</strong> Choose hours, minutes, and AM/PM format</li>
+            <li><strong>Add Label:</strong> Give your alarm a descriptive name</li>
+            <li><strong>Select Sound:</strong> Pick from 22 unique sounds including classic alarms, digital buzzers, nature sounds, animal sounds, and more</li>
+            <li><strong>Test Sound:</strong> Preview your chosen alarm sound</li>
+            <li><strong>Start Alarm:</strong> Activate your alarm and monitor its status</li>
+            <li><strong>Manage Alarms:</strong> Use snooze, stop, or delete functions as needed</li>
+          </ol>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-bold text-yellow-400 mb-4">💡 Use Cases & Applications</h3>
+          <ul class="text-gray-300 space-y-2">
+            <li>• <strong>Personal:</strong> Wake up calls, medication reminders, exercise schedules</li>
+            <li>• <strong>Work:</strong> Meeting reminders, break times, project deadlines</li>
+            <li>• <strong>Study:</strong> Study sessions, exam preparation, reading schedules</li>
+            <li>• <strong>Health:</strong> Medication alerts, hydration reminders, sleep tracking</li>
+            <li>• <strong>Events:</strong> Special occasions, appointments, travel schedules</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <h3 class="text-xl font-bold text-red-400 mb-4">🚀 Why Choose Our Online Alarm Clock?</h3>
+                  <p class="text-gray-300 leading-relaxed max-w-4xl mx-auto">
+            Our online alarm clock stands out with its premium design, advanced features, and user-friendly interface. 
+            Built with modern web technologies and featuring 22 high-quality audio files, it provides reliable alarm functionality 
+            without requiring app downloads or installations. The responsive design ensures perfect operation across all devices, 
+            from smartphones to desktop computers.
+          </p>
+      </div>
+    </div>
+
+    <!-- Related Articles Section -->
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Related Articles & Guides</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <a href="morning-routine-guide.html" class="block p-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-300 border border-blue-500/30">
+          <h3 class="font-bold text-blue-400 mb-2">Morning Routine Guide</h3>
+          <p class="text-sm text-gray-400">Learn how to create the perfect morning routine with strategic alarm setting</p>
+        </a>
+        <a href="pomodoro-technique-guide.html" class="block p-4 rounded-xl bg-gradient-to-br from-green-500/20 to-teal-600/20 hover:from-green-500/30 hover:to-teal-600/30 transition-all duration-300 border border-green-500/30">
+          <h3 class="font-bold text-green-400 mb-2">Pomodoro Technique</h3>
+          <p class="text-sm text-gray-400">Master focus and productivity with strategic timer use</p>
+        </a>
+        <a href="digital-detox-guide.html" class="block p-4 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 hover:from-purple-500/30 hover:to-pink-600/30 transition-all duration-300 border border-purple-500/30">
+          <h3 class="font-bold text-purple-400 mb-2">Digital Detox Guide</h3>
+          <p class="text-sm text-gray-400">Create tech-free zones using alarms for better mental health</p>
+        </a>
+        <a href="mindful-time-management.html" class="block p-4 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-600/20 hover:from-orange-500/30 hover:to-red-600/30 transition-all duration-300 border border-orange-500/30">
+          <h3 class="font-bold text-orange-400 mb-2">Mindful Time Management</h3>
+          <p class="text-sm text-gray-400">Combine mindfulness with productivity for better focus</p>
+        </a>
+        <a href="remote-work-guide.html" class="block p-4 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 hover:from-cyan-500/30 hover:to-blue-600/30 transition-all duration-300 border border-cyan-500/30">
+          <h3 class="font-bold text-cyan-400 mb-2">Remote Work Guide</h3>
+          <p class="text-sm text-gray-400">Essential strategies for managing time while working from home</p>
+        </a>
+        <a href="workout-timing-guide.html" class="block p-4 rounded-xl bg-gradient-to-br from-yellow-500/20 to-orange-600/20 hover:from-yellow-500/30 hover:to-orange-600/30 transition-all duration-300 border border-yellow-500/30">
+          <h3 class="font-bold text-yellow-400 mb-2">Workout Timing Guide</h3>
+          <p class="text-sm text-gray-400">Optimize your fitness routine with strategic timing</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- SEO Keywords & References Section -->
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Related Keywords & References</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div>
+          <h4 class="text-lg font-bold text-blue-400 mb-3">Alarm Clock Terms</h4>
+          <div class="text-sm text-gray-400 space-y-1">
+            <p>• Online alarm clock</p>
+            <p>• Digital alarm clock</p>
+            <p>• Web-based alarm</p>
+            <p>• Browser alarm</p>
+            <p>• Internet alarm clock</p>
+            <p>• Free alarm clock</p>
+            <p>• Alarm app online</p>
+            <p>• Wake up alarm</p>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold text-green-400 mb-3">Time Management</h4>
+          <div class="text-sm text-gray-400 space-y-1">
+            <p>• Timer online</p>
+            <p>• Stopwatch web</p>
+            <p>• Countdown timer</p>
+            <p>• World clock</p>
+            <p>• Time calculator</p>
+            <p>• Date calculator</p>
+            <p>• Hour calculator</p>
+            <p>• Time zone converter</p>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold text-purple-400 mb-3">Productivity Tools</h4>
+          <div class="text-sm text-gray-400 space-y-1">
+            <p>• Reminder app</p>
+            <p>• Task scheduler</p>
+            <p>• Productivity timer</p>
+            <p>• Focus timer</p>
+            <p>• Pomodoro timer</p>
+            <p>• Study timer</p>
+            <p>• Work timer</p>
+            <p>• Break timer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center text-gray-300">
+        <p class="text-lg mb-2">
+          <strong>Popular Searches:</strong> "online alarm clock free", "set alarm online", "digital alarm clock web", 
+          "alarm clock app browser", "wake up alarm online", "timer and alarm clock", "best online alarm clock"
+        </p>
+        <p class="text-sm text-gray-400">
+          Our online alarm clock is the perfect solution for anyone needing reliable alarm functionality without downloading apps. 
+          Whether you're looking for a wake-up call, meeting reminder, or study timer, our comprehensive alarm system has you covered.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Elements (hidden) -->
+  <audio id="mixkit-alert-alarm-1005.wav" preload="auto" src="audio/mixkit-alert-alarm-1005.wav" loop></audio>
+  <audio id="mixkit-angry-dragon-growl-309.wav" preload="auto" src="audio/mixkit-angry-dragon-growl-309.wav" loop></audio>
+  <audio id="mixkit-arabian-mystery-harp-notification-2489.wav" preload="auto" src="audio/mixkit-arabian-mystery-harp-notification-2489.wav" loop></audio>
+  <audio id="mixkit-battleship-alarm-1001.wav" preload="auto" src="audio/mixkit-battleship-alarm-1001.wav" loop></audio>
+  <audio id="mixkit-cartoon-kitty-begging-meow-92.wav" preload="auto" src="audio/mixkit-cartoon-kitty-begging-meow-92.wav" loop></audio>
+  <audio id="mixkit-classic-alarm-995.wav" preload="auto" src="audio/mixkit-classic-alarm-995.wav" loop></audio>
+  <audio id="mixkit-classic-winner-alarm-1997.wav" preload="auto" src="audio/mixkit-classic-winner-alarm-1997.wav" loop></audio>
+  <audio id="mixkit-cow-moo-1744.wav" preload="auto" src="audio/mixkit-cow-moo-1744.wav" loop></audio>
+  <audio id="mixkit-critical-alarm-1004.wav" preload="auto" src="audio/mixkit-critical-alarm-1004.wav" loop></audio>
+  <audio id="mixkit-digital-clock-digital-alarm-buzzer-992.wav" preload="auto" src="audio/mixkit-digital-clock-digital-alarm-buzzer-992.wav" loop></audio>
+  <audio id="mixkit-dog-barking-twice-1.wav" preload="auto" src="audio/mixkit-dog-barking-twice-1.wav" loop></audio>
+  <audio id="mixkit-facility-alarm-sound-999.wav" preload="auto" src="audio/mixkit-facility-alarm-sound-999.wav" loop></audio>
+  <audio id="mixkit-horde-of-barking-dogs-60.wav" preload="auto" src="audio/mixkit-horde-of-barking-dogs-60.wav" loop></audio>
+  <audio id="mixkit-little-baby-sneeze-2214.wav" preload="auto" src="audio/mixkit-cow-moo-1744.wav" loop></audio>
+  <audio id="mixkit-little-birds-singing-in-the-trees-17.wav" preload="auto" src="audio/mixkit-little-birds-singing-in-the-trees-17.wav" loop></audio>
+  <audio id="mixkit-morning-clock-alarm-1003.wav" preload="auto" src="audio/mixkit-morning-clock-alarm-1003.wav" loop></audio>
+  <audio id="mixkit-retro-game-emergency-alarm-1000.wav" preload="auto" src="audio/mixkit-retro-game-emergency-alarm-1000.wav" loop></audio>
+  <audio id="mixkit-rooster-crowing-in-the-morning-2462.wav" preload="auto" src="audio/mixkit-rooster-crowing-in-the-morning-2462.wav" loop></audio>
+  <audio id="mixkit-scared-horse-neighing-85.wav" preload="auto" src="audio/mixkit-scared-horse-neighing-85.wav" loop></audio>
+  <audio id="mixkit-security-facility-breach-alarm-994.wav" preload="auto" src="audio/mixkit-security-facility-breach-alarm-994.wav" loop></audio>
+  <audio id="mixkit-slot-machine-win-alarm-1995.wav" preload="auto" src="audio/mixkit-slot-machine-win-alarm-1995.wav" loop></audio>
+  <audio id="mixkit-sound-alert-in-hall-1006.wav" preload="auto" src="audio/mixkit-sound-alert-in-hall-1006.wav" loop></audio>
+  <audio id="mixkit-wolf-howling-1775.wav" preload="auto" src="audio/mixkit-wolf-howling-1775.wav" loop></audio>
+
+  <!-- Premium Alarm Notification Modal -->
+  <div id="alarm-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+    <div class="modal-premium rounded-3xl p-10 max-w-lg w-full mx-6 text-center pulse-alarm">
+      <div class="text-8xl mb-6">⏰</div>
+      <h2 id="alarm-title" class="text-3xl font-bold mb-4 gradient-text">Alarm!</h2>
+      <p id="alarm-time" class="text-xl text-gray-300 mb-8">Time to wake up!</p>
+      <div class="flex gap-6 justify-center">
+        <button id="snooze-btn" class="glass-effect rounded-2xl px-8 py-4 hover:scale-105 transition-all duration-300 group">
+          <span class="text-lg font-semibold text-yellow-400 group-hover:text-yellow-300 transition-colors">
+            😴 Snooze (5min)
+          </span>
+        </button>
+        <button id="stop-btn" class="glass-effect rounded-2xl px-8 py-4 hover:scale-105 transition-all duration-300 group">
+          <span class="text-lg font-semibold text-red-400 group-hover:text-red-300 transition-colors">
+            ⏹️ Stop
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Utility functions
+    function pad(num, size = 2) { return num.toString().padStart(size, '0'); }
+    function getCurrentTime() {
+      const now = new Date();
+      let hour = now.getHours();
+      const minute = now.getMinutes();
+      const second = now.getSeconds();
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      hour = hour % 12; if (hour === 0) hour = 12;
+      return { hour, minute, second, ampm, date: now };
+    }
+    function to24Hour(hour, ampm) {
+      hour = parseInt(hour, 10);
+      if (ampm === 'AM') { if (hour === 12) return 0; return hour; }
+      else { if (hour === 12) return 12; return hour + 12; }
+    }
+    
+    // Clock display
+    function updateClock() {
+      const { hour, minute, second, ampm, date } = getCurrentTime();
+      document.getElementById('alarm-clock').textContent = `${pad(hour)}:${pad(minute)}:${pad(second)}`;
+      document.getElementById('alarm-ampm').textContent = ampm;
+      document.getElementById('alarm-date').textContent = date.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    setInterval(updateClock, 1000); updateClock();
+    
+    // Populate hour/minute dropdowns
+    function populateAlarmInputs() {
+      const hourSel = document.getElementById('alarm-hour');
+      const minSel = document.getElementById('alarm-minute');
+      hourSel.innerHTML = ''; minSel.innerHTML = '';
+      for (let h = 1; h <= 12; h++) hourSel.innerHTML += `<option value="${h}">${pad(h)}</option>`;
+      for (let m = 0; m < 60; m++) minSel.innerHTML += `<option value="${m}">${pad(m)}</option>`;
+    }
+    populateAlarmInputs();
+    
+    // Alarm logic
+    let alarms = JSON.parse(localStorage.getItem('alarms_v2') || '[]');
+    let alarmData = JSON.parse(localStorage.getItem('alarmData_v2') || '[]');
+    let alarmTimeout = null;
+    let currentAlarm = null;
+    let snoozeTimeout = null;
+    
+    const alarmSounds = {
+      'mixkit-alert-alarm-1005.wav': document.getElementById('mixkit-alert-alarm-1005.wav'),
+      'mixkit-angry-dragon-growl-309.wav': document.getElementById('mixkit-angry-dragon-growl-309.wav'),
+      'mixkit-arabian-mystery-harp-notification-2489.wav': document.getElementById('mixkit-arabian-mystery-harp-notification-2489.wav'),
+      'mixkit-battleship-alarm-1001.wav': document.getElementById('mixkit-battleship-alarm-1001.wav'),
+      'mixkit-cartoon-kitty-begging-meow-92.wav': document.getElementById('mixkit-cartoon-kitty-begging-meow-92.wav'),
+      'mixkit-classic-alarm-995.wav': document.getElementById('mixkit-classic-alarm-995.wav'),
+      'mixkit-classic-winner-alarm-1997.wav': document.getElementById('mixkit-classic-winner-alarm-1997.wav'),
+      'mixkit-cow-moo-1744.wav': document.getElementById('mixkit-cow-moo-1744.wav'),
+      'mixkit-critical-alarm-1004.wav': document.getElementById('mixkit-critical-alarm-1004.wav'),
+      'mixkit-digital-clock-digital-alarm-buzzer-992.wav': document.getElementById('mixkit-digital-clock-digital-alarm-buzzer-992.wav'),
+      'mixkit-dog-barking-twice-1.wav': document.getElementById('mixkit-dog-barking-twice-1.wav'),
+      'mixkit-facility-alarm-sound-999.wav': document.getElementById('mixkit-facility-alarm-sound-999.wav'),
+      'mixkit-horde-of-barking-dogs-60.wav': document.getElementById('mixkit-horde-of-barking-dogs-60.wav'),
+      'mixkit-little-baby-sneeze-2214.wav': document.getElementById('mixkit-little-baby-sneeze-2214.wav'),
+      'mixkit-little-birds-singing-in-the-trees-17.wav': document.getElementById('mixkit-little-birds-singing-in-the-trees-17.wav'),
+      'mixkit-morning-clock-alarm-1003.wav': document.getElementById('mixkit-morning-clock-alarm-1003.wav'),
+      'mixkit-retro-game-emergency-alarm-1000.wav': document.getElementById('mixkit-retro-game-emergency-alarm-1000.wav'),
+      'mixkit-rooster-crowing-in-the-morning-2462.wav': document.getElementById('mixkit-rooster-crowing-in-the-morning-2462.wav'),
+      'mixkit-scared-horse-neighing-85.wav': document.getElementById('mixkit-scared-horse-neighing-85.wav'),
+      'mixkit-security-facility-breach-alarm-994.wav': document.getElementById('mixkit-security-facility-breach-alarm-994.wav'),
+      'mixkit-slot-machine-win-alarm-1995.wav': document.getElementById('mixkit-slot-machine-win-alarm-1995.wav'),
+      'mixkit-sound-alert-in-hall-1006.wav': document.getElementById('mixkit-sound-alert-in-hall-1006.wav'),
+      'mixkit-wolf-howling-1775.wav': document.getElementById('mixkit-wolf-howling-1775.wav'),
+    };
+
+    // Initialize audio elements
+    function initializeAudio() {
+      // Initialize Web Audio API context
+      try {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!window.audioContext) {
+          window.audioContext = new AudioContext();
+        }
+        
+        // Show audio status
+        document.getElementById('audio-status').classList.remove('hidden');
+      } catch (e) {
+        console.log('Web Audio API not supported:', e);
+        document.getElementById('audio-warning').classList.remove('hidden');
+      }
+      
+      // Set volume for HTML audio elements (fallback)
+      Object.values(alarmSounds).forEach(audio => {
+        audio.volume = 0.8;
+        audio.addEventListener('error', (e) => {
+          console.log('Audio error:', e);
+        });
+      });
+    }
+
+    // Show alarm modal
+    function showAlarmModal(alarm) {
+      currentAlarm = alarm;
+      document.getElementById('alarm-title').textContent = alarm.label || 'Alarm!';
+      document.getElementById('alarm-time').textContent = `${pad(alarm.hour)}:${pad(alarm.minute)} ${alarm.ampm}`;
+      document.getElementById('alarm-modal').classList.remove('hidden');
+      
+      // Start playing alarm sound with alarm's volume setting
+      playAlarmSound(alarm.sound, alarm.volume || 0.8, true);
+    }
+
+    // Hide alarm modal
+    function hideAlarmModal() {
+      document.getElementById('alarm-modal').classList.add('hidden');
+      currentAlarm = null;
+      
+      // Stop all audio and reset loop
+      Object.values(alarmSounds).forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.loop = false;
+      });
+      
+      // Clear any fallback beep intervals
+      if (window.fallbackBeepInterval) {
+        clearTimeout(window.fallbackBeepInterval);
+        window.fallbackBeepInterval = null;
+      }
+    }
+
+    // Snooze functionality
+    function snoozeAlarm() {
+      if (currentAlarm) {
+        hideAlarmModal();
+        
+        // Set snooze for 5 minutes
+        const snoozeTime = new Date();
+        snoozeTime.setMinutes(snoozeTime.getMinutes() + 5);
+        
+        const snoozeAlarm = {
+          ...currentAlarm,
+          id: Date.now() + Math.random(),
+          hour: snoozeTime.getHours() % 12 || 12,
+          minute: snoozeTime.getMinutes(),
+          ampm: snoozeTime.getHours() >= 12 ? 'PM' : 'AM',
+          isSnooze: true
+        };
+        
+        alarms.push(snoozeAlarm);
+        saveAlarms();
+        renderAlarms();
+        
+        // Show snooze notification
+        setTimeout(() => {
+          showAlarmModal(snoozeAlarm);
+        }, 5 * 60 * 1000);
+      }
+    }
+
+    // Stop alarm functionality
+    function stopAlarm() {
+      if (currentAlarm) {
+        // Log alarm data
+        alarmData.push({
+          name: currentAlarm.label || 'Alarm',
+          time: `${pad(currentAlarm.hour)}:${pad(currentAlarm.minute)}`,
+          started: new Date().toLocaleString(),
+          stopped: new Date().toLocaleString()
+        });
+        saveAlarmData();
+        renderAlarmData();
+        
+        // Remove alarm from list
+        const alarmIndex = alarms.findIndex(a => a.id === currentAlarm.id);
+        if (alarmIndex !== -1) {
+          alarms.splice(alarmIndex, 1);
+          saveAlarms();
+          renderAlarms();
+        }
+        
+        hideAlarmModal();
+      }
+    }
+
+    // Event listeners for modal buttons
+    document.getElementById('snooze-btn').addEventListener('click', snoozeAlarm);
+    document.getElementById('stop-btn').addEventListener('click', stopAlarm);
+
+    // Volume control
+    document.getElementById('alarm-volume').addEventListener('input', function() {
+      const volume = this.value;
+      const display = document.getElementById('volume-display');
+      display.textContent = Math.round(volume * 100) + '%';
+    });
+
+    // Auto-preview sound when selection changes
+    document.getElementById('alarm-sound').addEventListener('change', function() {
+      const selectedSound = this.value;
+      const selectedVolume = parseFloat(document.getElementById('alarm-volume').value);
+      
+      // Hide placeholder when sound is selected
+      const placeholder = document.getElementById('audio-placeholder');
+      if (placeholder) {
+        placeholder.style.display = selectedSound ? 'none' : 'block';
+      }
+      
+      // Small delay to let the change register
+      setTimeout(() => {
+        if (selectedSound) {
+          playAlarmSound(selectedSound, selectedVolume * 0.5, false); // Play at half volume for preview
+        }
+      }, 100);
+    });
+
+    // Test sound button
+    document.getElementById('test-sound-btn').addEventListener('click', function() {
+      // Ensure audio context is running
+      if (window.audioContext && window.audioContext.state === 'suspended') {
+        window.audioContext.resume();
+      }
+      
+      const selectedSound = document.getElementById('alarm-sound').value;
+      const selectedVolume = parseFloat(document.getElementById('alarm-volume').value);
+      const success = playAlarmSound(selectedSound, selectedVolume, false);
+      
+      // Show a brief notification
+      const btn = this;
+      const originalText = btn.innerHTML;
+      
+      if (success) {
+        btn.innerHTML = '<span class="text-xl font-semibold text-green-300">✅ Sound Tested!</span>';
+        document.getElementById('audio-status').classList.remove('hidden');
+        document.getElementById('audio-warning').classList.add('hidden');
+      } else {
+        btn.innerHTML = '<span class="text-xl font-semibold text-red-300">❌ Audio Failed</span>';
+        document.getElementById('audio-warning').classList.remove('hidden');
+        document.getElementById('audio-status').classList.add('hidden');
+      }
+      
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2000);
+    });
+
+    function saveAlarms() { localStorage.setItem('alarms_v2', JSON.stringify(alarms)); }
+    function saveAlarmData() { localStorage.setItem('alarmData_v2', JSON.stringify(alarmData)); }
+    
+    function renderAlarms() {
+      const list = document.getElementById('alarms-list');
+      list.innerHTML = '';
+      if (alarms.length === 0) {
+        list.innerHTML = '<div class="text-center text-gray-400 py-8"><div class="text-4xl mb-4">🔕</div><p class="text-lg">No alarms set yet</p><p class="text-sm text-gray-500">Set your first alarm using the form above</p><div class="mt-4 text-xs text-gray-600"><p>• Choose time, add label, select sound</p><p>• Test sounds before setting alarms</p><p>• Manage multiple alarms easily</p></div></div>';
+        return;
+      }
+      alarms.forEach((alarm, idx) => {
+        const div = document.createElement('div');
+        div.className = "alarm-card rounded-2xl p-6 flex items-center justify-between";
+        div.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">${pad(alarm.hour)}:${pad(alarm.minute)}</span>
+            </div>
+            <div>
+              <div class="font-semibold text-lg">${pad(alarm.hour)}:${pad(alarm.minute)} ${alarm.ampm}</div>
+              <div class="text-sm text-gray-400">${alarm.label || 'Alarm'}</div>
+              <div class="text-xs text-blue-400">🔊 ${alarm.sound} • ${Math.round((alarm.volume || 0.8) * 100)}%</div>
+              ${alarm.isSnooze ? '<span class="text-xs text-yellow-400 bg-yellow-400/20 px-2 py-1 rounded-full">Snooze</span>' : ''}
+            </div>
+          </div>
+        `;
+        const del = document.createElement('button');
+        del.className = "glass-effect rounded-xl px-4 py-2 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold";
+        del.innerHTML = "🗑️ Delete";
+        del.onclick = () => { alarms.splice(idx, 1); saveAlarms(); renderAlarms(); };
+        div.appendChild(del);
+        list.appendChild(div);
+      });
+    }
+    
+    function renderAlarmData() {
+      const tbody = document.getElementById('alarm-data-table');
+      tbody.innerHTML = '';
+      if (alarmData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-400 py-8"><div class="text-3xl mb-3">📊</div><p class="text-lg">No alarm history yet</p><p class="text-sm text-gray-500">Alarm history will appear here after you use alarms</p><div class="mt-3 text-xs text-gray-600"><p>• Set and stop alarms to build history</p><p>• Export data to CSV for analysis</p><p>• Track your alarm usage patterns</p></div></td></tr>';
+        return;
+      }
+      alarmData.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-gray-700 hover:bg-gray-800/50 transition-colors";
+        tr.innerHTML = `
+          <td class="px-4 py-3 text-center">${idx+1}</td>
+          <td class="px-4 py-3 font-medium">${row.name}</td>
+          <td class="px-4 py-3 text-blue-400 font-mono">${row.time}</td>
+          <td class="px-4 py-3 text-gray-400">${row.started}</td>
+          <td class="px-4 py-3 text-gray-400">${row.stopped || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    
+    // Set alarm
+    document.getElementById('alarm-set-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const hour = document.getElementById('alarm-hour').value;
+      const minute = document.getElementById('alarm-minute').value;
+      const ampm = document.getElementById('alarm-ampm').value;
+      const label = document.getElementById('alarm-label').value.trim();
+      const sound = document.getElementById('alarm-sound').value;
+      const volume = parseFloat(document.getElementById('alarm-volume').value);
+      
+      alarms.push({
+        id: Date.now() + Math.random(),
+        hour: parseInt(hour, 10),
+        minute: parseInt(minute, 10),
+        ampm,
+        label,
+        sound,
+        volume,
+        enabled: true
+      });
+      saveAlarms();
+      renderAlarms();
+      this.reset();
+      
+      // Show success feedback
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '✅ Alarm Set!';
+      submitBtn.classList.add('bg-green-600');
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.classList.remove('bg-green-600');
+      }, 2000);
+    });
+    
+    // Alarm check
+    setInterval(() => {
+      const now = new Date();
+      alarms.forEach((alarm, idx) => {
+        if (!alarm.enabled) return;
+        let alarmHour24 = to24Hour(alarm.hour, alarm.ampm);
+        if (
+          now.getHours() === alarmHour24 &&
+          now.getMinutes() === alarm.minute &&
+          now.getSeconds() === 0
+        ) {
+          triggerAlarm(idx);
+        }
+      });
+    }, 1000);
+    
+    function triggerAlarm(idx) {
+      const alarm = alarms[idx];
+      showAlarmModal(alarm);
+      
+      // Remove the alarm from the list since it's now active
+      alarms.splice(idx, 1);
+      saveAlarms();
+      renderAlarms();
+    }
+    
+    function playAlarmSound(sound, volume, loop = false) {
+      try {
+        // Stop all other audio first
+        Object.values(alarmSounds).forEach(audio => { 
+          audio.pause(); 
+          audio.currentTime = 0; 
+          audio.loop = false; 
+        });
+        
+        // Get the selected audio element
+        const audio = alarmSounds[sound];
+        if (audio) {
+          audio.currentTime = 0;
+          audio.volume = volume;
+          audio.loop = loop;
+          
+          // Try to play the audio
+          const playPromise = audio.play();
+          
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                console.log('Alarm sound playing successfully:', sound);
+              })
+              .catch(error => {
+                console.log('Audio playback failed:', error);
+                // Fallback: try to create a simple beep sound
+                createFallbackBeep();
+              });
+            return true;
+          }
+        } else {
+          console.log('Audio file not found:', sound);
+          createFallbackBeep();
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.log('Error playing alarm sound:', error);
+        createFallbackBeep();
+        return false;
+      }
+    }
+
+
+
+    // Fallback beep sound using Web Audio API - loops continuously
+    function createFallbackBeep() {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Create a continuous beep that loops every 1 second
+        const createBeep = () => {
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          
+          oscillator.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          
+          oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+          oscillator.type = 'sine';
+          
+          gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+          
+          oscillator.start(audioContext.currentTime);
+          oscillator.stop(audioContext.currentTime + 0.8);
+          
+                  // Schedule the next beep
+        if (currentAlarm) {
+          window.fallbackBeepInterval = setTimeout(() => {
+            if (currentAlarm) {
+              createBeep();
+            }
+          }, 800);
+        }
+        };
+        
+        // Start the continuous beeping
+        if (currentAlarm) {
+          createBeep();
+        }
+        
+      } catch (error) {
+        console.log('Fallback beep failed:', error);
+      }
+    }
+    
+    // Export CSV
+    document.getElementById('export-csv').onclick = function() {
+      let csv = 'Name,Alarm,Started,Stopped\n';
+      alarmData.forEach(row => {
+        csv += `${row.name},${row.time},${row.started},${row.stopped || ''}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'alarm_data.csv'; a.click();
+      URL.revokeObjectURL(url);
+    };
+    
+    // Clear Data
+    document.getElementById('clear-data').onclick = function() {
+      if (confirm('Clear all alarm data? This action cannot be undone.')) {
+        alarmData = [];
+        saveAlarmData();
+        renderAlarmData();
+      }
+    };
+    
+    // Initialize audio system
+    initializeAudio();
+    
+    // Enable audio on any user interaction
+    document.addEventListener('click', function() {
+      if (window.audioContext && window.audioContext.state === 'suspended') {
+        window.audioContext.resume();
+      }
+    }, { once: true });
+    
+    // Also enable audio on form submission
+    document.getElementById('alarm-set-form').addEventListener('submit', function() {
+      if (window.audioContext && window.audioContext.state === 'suspended') {
+        window.audioContext.resume();
+      }
+    });
+    
+    // Initial render
+    renderAlarms();
+    renderAlarmData();
+    
+    // Initialize audio placeholder visibility
+    const selectedSound = document.getElementById('alarm-sound').value;
+    const placeholder = document.getElementById('audio-placeholder');
+    if (placeholder && selectedSound) {
+      placeholder.style.display = 'none';
+    }
+  </script>
+  
+
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy-policy-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-800 rounded-2xl p-8 max-w-4xl w-full mx-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-white">Privacy Policy</h2>
+        <button onclick="hidePrivacyPolicy()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      
+      <div class="text-gray-300 space-y-4 text-sm leading-relaxed">
+        <p class="text-lg text-white font-semibold">Last updated: January <span id="current-year"></span></p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">1. Information We Collect</h3>
+        <p>Online Alarm is committed to protecting your privacy. We collect minimal information necessary to provide our services:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li><strong>Alarm Settings:</strong> Your alarm preferences, times, labels, and sound selections</li>
+          <li><strong>Usage Data:</strong> How you interact with our alarm features and tools</li>
+          <li><strong>Device Information:</strong> Basic device and browser information for compatibility</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">2. How We Use Your Information</h3>
+        <p>We use the collected information to:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li>Provide and maintain our alarm services</li>
+          <li>Remember your alarm preferences and settings</li>
+          <li>Improve our application functionality and user experience</li>
+          <li>Ensure compatibility across different devices and browsers</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">3. Data Storage and Security</h3>
+        <p>Your data is stored locally on your device using browser storage:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li><strong>Local Storage:</strong> Alarm settings are saved on your device only</li>
+          <li><strong>No Server Storage:</strong> We don't store your data on external servers</li>
+          <li><strong>Encryption:</strong> All data is encrypted and secure</li>
+          <li><strong>Your Control:</strong> You can clear all data at any time</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">4. Third-Party Services</h3>
+        <p>We do not share your information with third parties. Our application operates independently without external tracking or analytics services.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">5. Your Rights</h3>
+        <p>You have complete control over your data:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li>View and modify your alarm settings</li>
+          <li>Delete all stored data at any time</li>
+          <li>Opt out of any data collection</li>
+          <li>Request data export (though data is stored locally)</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">6. Contact Information</h3>
+        <p>If you have questions about this Privacy Policy, please contact us at: <a href="namasteji569@gmail.com" class="text-blue-400 hover:underline">namasteji569@gmail.com</a></p>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <button onclick="hidePrivacyPolicy()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="terms-of-service-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-800 rounded-2xl p-8 max-w-4xl w-full mx-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-white">Terms of Service</h2>
+        <button onclick="hideTermsOfService()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      
+      <div class="text-gray-300 space-y-4 text-sm leading-relaxed">
+        <p class="text-lg text-white font-semibold">Last updated: January <span id="current-year"></span></p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">1. Acceptance of Terms</h3>
+        <p>By accessing and using Online Alarm, you accept and agree to be bound by the terms and provision of this agreement.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">2. Description of Service</h3>
+        <p>Online Alarm provides time management tools including:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li>Alarm clock functionality with custom sounds</li>
+          <li>Timer and countdown features</li>
+          <li>Stopwatch with lap timing</li>
+          <li>Date calculation tools</li>
+          <li>Local data storage for user preferences</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">3. User Responsibilities</h3>
+        <p>As a user of Online Alarm, you agree to:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li>Use the service responsibly and not for harmful purposes</li>
+          <li>Respect the intellectual property rights of audio content</li>
+          <li>Not attempt to reverse engineer or modify the application</li>
+          <li>Use appropriate volume levels when testing alarms</li>
+          <li>Ensure alarms don't disturb others inappropriately</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">4. Intellectual Property</h3>
+        <p>Online Alarm and its original content, features, and functionality are owned by Online Alarm and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">5. Audio Content</h3>
+        <p>Users are responsible for ensuring they have the right to use any audio files they upload or reference. Online Alarm is not responsible for copyright violations related to user-provided audio content.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">6. Limitation of Liability</h3>
+        <p>Online Alarm is provided "as is" without warranties of any kind. We are not liable for any damages arising from the use of our service, including but not limited to missed appointments or events.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">7. Service Availability</h3>
+        <p>We strive to maintain high service availability but cannot guarantee uninterrupted access. The service may be temporarily unavailable due to maintenance or technical issues.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">8. Changes to Terms</h3>
+        <p>We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of updated terms.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">9. Contact Information</h3>
+        <p>For questions about these Terms of Service, contact us at: <a href="mailto:namasteji569@gmail.com" class="text-blue-400 hover:underline">namasteji569@gmail.com</a></p>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <button onclick="hideTermsOfService()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Policy Modal -->
+  <div id="cookie-policy-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-800 rounded-2xl p-8 max-w-4xl w-full mx-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center space-x-3 mb-6">
+        <span class="text-2xl">🍪</span>
+        <h2 class="text-3xl font-bold text-white">Cookie Policy</h2>
+        <button onclick="hideCookiePolicy()" class="text-gray-400 hover:text-white text-2xl ml-auto">&times;</button>
+      </div>
+      
+      <div class="text-gray-300 space-y-4 text-sm leading-relaxed">
+        <p class="text-lg text-white font-semibold">Last updated: January <span id="current-year"></span></p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">1. What Are Cookies?</h3>
+        <p>Cookies are small text files stored on your device that help websites remember information about your visit.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">2. How We Use Cookies</h3>
+        <p>Online Alarm uses cookies and similar technologies to:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li><strong>Essential Cookies:</strong> Remember your alarm preferences and settings</li>
+          <li><strong>Functionality Cookies:</strong> Store your custom alarm configurations</li>
+          <li><strong>Performance Cookies:</strong> Optimize application performance</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">3. Types of Cookies We Use</h3>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li><strong>Session Cookies:</strong> Temporary cookies that expire when you close your browser</li>
+          <li><strong>Persistent Cookies:</strong> Cookies that remain on your device for extended periods</li>
+          <li><strong>Local Storage:</strong> Browser storage for alarm settings and preferences</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">4. Third-Party Cookies</h3>
+        <p>We do not use third-party cookies or tracking technologies. All cookies are set by Online Alarm for essential functionality only.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">5. Managing Cookies</h3>
+        <p>You can control cookies through your browser settings:</p>
+        <ul class="list-disc list-inside ml-4 space-y-1">
+          <li>Delete existing cookies</li>
+          <li>Block cookies from specific websites</li>
+          <li>Set browser to ask before accepting cookies</li>
+          <li>Clear all cookies and site data</li>
+        </ul>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">6. Impact of Disabling Cookies</h3>
+        <p>Disabling cookies may affect the functionality of Online Alarm, particularly the ability to remember your alarm settings and preferences.</p>
+        
+        <h3 class="text-xl font-bold text-blue-400 mt-6">7. Contact Information</h3>
+        <p>For questions about our Cookie Policy, contact us at: <a href="mailto:namasteji569@gmail.com" class="text-blue-400 hover:underline">namasteji569@gmail.com</a></p>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <button onclick="hideCookiePolicy()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal functions for Privacy Policy and Terms
+    function showPrivacyPolicy() {
+      document.getElementById('privacy-policy-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function hidePrivacyPolicy() {
+      document.getElementById('privacy-policy-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    function showTermsOfService() {
+      document.getElementById('terms-of-service-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function hideTermsOfService() {
+      document.getElementById('terms-of-service-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    function showCookiePolicy() {
+      document.getElementById('cookie-policy-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function hideCookiePolicy() {
+      document.getElementById('cookie-policy-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close modals when clicking outside
+    document.addEventListener('click', function(event) {
+      const modals = ['privacy-policy-modal', 'terms-of-service-modal', 'cookie-policy-modal'];
+      modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (event.target === modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+    
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const modals = ['privacy-policy-modal', 'terms-of-service-modal', 'cookie-policy-modal'];
+        modals.forEach(modalId => {
+          const modal = document.getElementById(modalId);
+          if (!modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+          }
+        });
+      }
+    });
+    
+    // Set current year in copyright and modal dates
+    function updateCurrentYear() {
+      const yearElements = document.querySelectorAll('#current-year');
+      yearElements.forEach(element => {
+        element.textContent = new Date().getFullYear();
+      });
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+    
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('dark-mode-toggle');
+    const darkIcon = document.getElementById('dark-icon');
+    const lightIcon = document.getElementById('light-icon');
+    const themeText = document.getElementById('theme-text');
+
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.classList.contains('dark-mode');
+      
+      if (isDark) {
+        // Switch to light mode
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        
+        // Update icons and text
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+        themeText.textContent = 'Light Mode';
+      } else {
+        // Switch to dark mode
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        
+        // Update icons and text
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+        themeText.textContent = 'Dark Mode';
+      }
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    // Theme on load
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        // Light mode
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        
+        if (darkIcon && lightIcon && themeText) {
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+          themeText.textContent = 'Light Mode';
+        }
+      } else {
+        // Dark mode (default)
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        
+        if (darkIcon && lightIcon && themeText) {
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+          themeText.textContent = 'Dark Mode';
+                 }
+       }
+     })();
+     
+     // Sidebar functionality
+     let sidebarOpen = false;
+     let touchStartX = 0;
+     let touchEndX = 0;
+
+     function toggleSidebar() {
+       const sidebar = document.getElementById('sidebar');
+       const mainContent = document.querySelector('.max-w-4xl');
+       const backdrop = document.getElementById('sidebar-backdrop');
+       
+       sidebarOpen = !sidebarOpen;
+       
+       if (sidebarOpen) {
+         sidebar.classList.remove('-translate-x-full');
+         backdrop.classList.remove('hidden');
+       } else {
+         sidebar.classList.add('-translate-x-full');
+         backdrop.classList.add('hidden');
+       }
+     }
+
+     function closeSidebar() {
+       const sidebar = document.getElementById('sidebar');
+       const backdrop = document.getElementById('sidebar-backdrop');
+       
+       sidebarOpen = false;
+       sidebar.classList.add('-translate-x-full');
+       backdrop.classList.add('hidden');
+     }
+
+     function handleSwipe() {
+       const swipeThreshold = 50;
+       const swipeDistance = touchEndX - touchStartX;
+       
+       if (swipeDistance > swipeThreshold && touchStartX < 50) {
+         // Right swipe from left edge - open sidebar
+         if (!sidebarOpen) {
+           toggleSidebar();
+         }
+       } else if (swipeDistance < -swipeThreshold && sidebarOpen) {
+         // Left swipe - close sidebar
+         closeSidebar();
+       }
+     }
+
+     // Event listeners
+     document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+     document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
+     document.getElementById('sidebar-backdrop').addEventListener('click', closeSidebar);
+
+     // Close sidebar when clicking on navigation links (with delay to allow navigation)
+     document.querySelectorAll('#sidebar a').forEach(link => {
+       link.addEventListener('click', function(e) {
+         // Only close sidebar for internal navigation links (not external links)
+         if (link.href && !link.href.startsWith('http') && !link.href.startsWith('#')) {
+           e.preventDefault();
+           // Small delay to allow navigation to complete
+           setTimeout(() => {
+             closeSidebar();
+             // Navigate to the page
+             window.location.href = link.href;
+           }, 100);
+         }
+       });
+     });
+
+     // Touch events for mobile swipe
+     document.addEventListener('touchstart', (e) => {
+       touchStartX = e.changedTouches[0].screenX;
+     });
+
+     document.addEventListener('touchend', (e) => {
+       touchEndX = e.changedTouches[0].screenX;
+       handleSwipe();
+     });
+
+     // Close sidebar on mobile resize
+     window.addEventListener('resize', () => {
+       if (window.innerWidth <= 768 && sidebarOpen) {
+         closeSidebar();
+       }
+     });
+
+     // Update sidebar time
+     function updateSidebarTime() {
+       const now = new Date();
+       const timeString = now.toLocaleTimeString('en-US', { 
+         hour12: false, 
+         hour: '2-digit', 
+         minute: '2-digit', 
+         second: '2-digit' 
+       });
+       const dateString = now.toLocaleDateString('en-US', { 
+         month: 'short', 
+         day: 'numeric' 
+       });
+       
+       const sidebarTime = document.getElementById('sidebar-time');
+       const sidebarDate = document.getElementById('sidebar-date');
+       
+       if (sidebarTime) sidebarTime.textContent = timeString;
+       if (sidebarDate) sidebarDate.textContent = dateString;
+     }
+
+         // Update sidebar time every second
+    setInterval(updateSidebarTime, 1000);
+    updateSidebarTime();
+
+    // Update copyright year
+    function updateCurrentYear() {
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+  </script>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold gradient-text mb-4">Online Alarm</h3>
+          <p class="text-gray-300 mb-4 leading-relaxed">
+            Free online time management tools including alarm clock, timer, stopwatch, countdown, and world clock. 
+            No download required - works on all devices with precision timing.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Tools</h4>
+          <ul class="space-y-2">
+            <li><a href="online-alarm.html" class="text-white hover:text-blue-400 transition-colors">Alarm Clock</a></li>
+            <li><a href="online-timer.html" class="text-white hover:text-blue-400 transition-colors">Timer</a></li>
+            <li><a href="online-stopwatch.html" class="text-white hover:text-blue-400 transition-colors">Stopwatch</a></li>
+            <li><a href="online-countdown.html" class="text-white hover:text-blue-400 transition-colors">Countdown</a></li>
+            <li><a href="world-clock.html" class="text-white hover:text-blue-400 transition-colors">World Clock</a></li>
+            <li><a href="date-calculator.html" class="text-white hover:text-blue-400 transition-colors">Date Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Legal -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="contact.html" class="text-white hover:text-blue-400 transition-colors">Contact & Support</a></li>
+            <li><a href="privacy-policy.html" class="text-white hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html" class="text-white hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © <span id="current-year"></span> Online Alarm. All rights reserved. Free online time tools for everyone.
+        </p>
+        <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+          <a href="privacy-policy.html" class="text-gray-400 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="terms-conditions.html" class="text-gray-400 hover:text-blue-400 transition-colors">Terms</a>
+          <a href="contact.html" class="text-gray-400 hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
