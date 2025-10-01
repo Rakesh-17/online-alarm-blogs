@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact & Support - Online Alarm</title>
+  <meta name="description" content="Contact Online Alarm support team. Get help with our time tools, report issues, or send feedback about our services.">
+  <meta name="keywords" content="contact support, Online Alarm help, customer service, technical support, feedback">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/contact.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/contact.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://onlinealarmblogs.com/contact.html">
+  <meta property="og:title" content="Contact & Support - Online Alarm">
+  <meta property="og:description" content="Get support and help with Online Alarm time tools and services.">
+  <meta property="og:image" content="https://onlinealarmblogs.com/images/contact-og-image.png">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #dc2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(30, 64, 175, 0.3));
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b;
+    }
+
+    .input-premium {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .input-premium:focus {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    body.light-mode .input-premium {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .input-premium:focus {
+      background: white;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white dark-mode">
+  <!-- Dark/Light Mode Toggle -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="glass-effect p-3 rounded-full hover:scale-110 transition-all duration-300">
+      <svg id="sun-icon" class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+      </svg>
+      <svg id="moon-icon" class="w-6 h-6 text-blue-400 hidden" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="glass-effect border-b border-white/10 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="text-2xl font-bold gradient-text">Online Alarm</a>
+        <a href="index.html" class="text-blue-400 hover:text-blue-300 transition-colors">
+          ← Back to Home
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-4xl mx-auto p-6 pt-20">
+    <!-- Breadcrumb -->
+    <nav class="mb-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-400">
+        <li>
+          <a href="index.html" class="hover:text-blue-400 transition-colors">Home</a>
+        </li>
+        <li>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </li>
+        <li>
+          <span class="text-blue-400 font-medium">Contact & Support</span>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Contact & Support</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        Need help with our time tools? Have feedback or suggestions? We're here to help!
+      </p>
+    </div>
+
+    <!-- Contact Options -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <!-- Email Support -->
+      <div class="glass-effect rounded-3xl p-8 premium-shadow">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-blue-400 mb-2">Email Support</h3>
+          <p class="text-gray-300 mb-4">Get help via email for any technical issues or questions</p>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <span class="text-gray-400">General Support:</span>
+            <p class="text-white">namasteji569@gmail.com</p>
+          </div>
+          <div>
+            <span class="text-gray-400">Technical Issues:</span>
+            <p class="text-white">namasteji569@gmail.com</p>
+          </div>
+          <div>
+            <span class="text-gray-400">Response Time:</span>
+            <p class="text-green-400">Within 24 hours</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ & Help -->
+      <div class="glass-effect rounded-3xl p-8 premium-shadow">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-green-400 mb-2">Quick Help</h3>
+          <p class="text-gray-300 mb-4">Find instant answers to common questions</p>
+        </div>
+        <div class="space-y-3">
+          <a href="#faq" class="block text-blue-400 hover:text-blue-300 transition-colors">
+            → Frequently Asked Questions
+          </a>
+          <a href="#troubleshooting" class="block text-blue-400 hover:text-blue-300 transition-colors">
+            → Troubleshooting Guide
+          </a>
+          <a href="#features" class="block text-blue-400 hover:text-blue-300 transition-colors">
+            → Feature Documentation
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="glass-effect rounded-3xl p-8 premium-shadow mb-12">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Send Us a Message</h2>
+      
+      <form id="contact-form" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-gray-300 mb-2">Name</label>
+            <input type="text" id="name" name="name" required class="input-premium w-full px-4 py-3 rounded-xl text-white border focus:outline-none transition-all">
+          </div>
+          <div>
+            <label for="email" class="block text-gray-300 mb-2">Email</label>
+            <input type="email" id="email" name="email" required class="input-premium w-full px-4 py-3 rounded-xl text-white border focus:outline-none transition-all">
+          </div>
+        </div>
+        
+        <div>
+          <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+          <select id="subject" name="subject" required class="input-premium w-full px-4 py-3 rounded-xl text-white border focus:outline-none transition-all">
+            <option value="">Select a topic</option>
+            <option value="technical">Technical Issue</option>
+            <option value="feature">Feature Request</option>
+            <option value="feedback">General Feedback</option>
+            <option value="bug">Bug Report</option>
+            <option value="privacy">Privacy Concern</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="message" class="block text-gray-300 mb-2">Message</label>
+          <textarea id="message" name="message" rows="6" required class="input-premium w-full px-4 py-3 rounded-xl text-white border focus:outline-none transition-all resize-none" placeholder="Please describe your issue or feedback in detail..."></textarea>
+        </div>
+        
+        <div class="text-center">
+          <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+            Send Message
+          </button>
+        </div>
+      </form>
+      
+      <div id="form-success" class="hidden mt-6 p-4 bg-green-500/20 border border-green-500/20 rounded-lg text-green-300 text-center">
+        Thank you for your message! We'll get back to you within 24 hours.
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div id="faq" class="glass-effect rounded-3xl p-8 premium-shadow mb-12">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Frequently Asked Questions</h2>
+      
+      <div class="space-y-6">
+        <div class="border-b border-gray-700/50 pb-4">
+          <h3 class="text-lg font-semibold text-blue-400 mb-2">Why isn't my alarm working?</h3>
+          <p class="text-gray-300">Make sure your browser tab stays open, your device volume is up, and you've allowed sound notifications. The alarm relies on your browser being active.</p>
+        </div>
+        
+        <div class="border-b border-gray-700/50 pb-4">
+          <h3 class="text-lg font-semibold text-blue-400 mb-2">Can I use multiple timers at once?</h3>
+          <p class="text-gray-300">Yes! You can set multiple alarms, timers, and use different tools simultaneously. Each tool operates independently.</p>
+        </div>
+        
+        <div class="border-b border-gray-700/50 pb-4">
+          <h3 class="text-lg font-semibold text-blue-400 mb-2">Do you store my alarm settings?</h3>
+          <p class="text-gray-300">Your settings are stored locally in your browser. We don't store personal alarm data on our servers. See our <a href="privacy-policy.html" class="text-blue-400 underline">Privacy Policy</a> for details.</p>
+        </div>
+        
+        <div class="border-b border-gray-700/50 pb-4">
+          <h3 class="text-lg font-semibold text-blue-400 mb-2">Is Online Alarm free to use?</h3>
+          <p class="text-gray-300">Yes, all our time tools are completely free to use with no registration required. We're supported by optional donations and non-intrusive advertising.</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-blue-400 mb-2">What browsers are supported?</h3>
+          <p class="text-gray-300">Our tools work on all modern browsers including Chrome, Firefox, Safari, and Edge. For best results, keep your browser updated.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div id="troubleshooting" class="glass-effect rounded-3xl p-8 premium-shadow mb-12">
+      <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Troubleshooting Guide</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-lg font-semibold text-yellow-400 mb-3">🔧 Common Issues</h3>
+          <ul class="space-y-2 text-gray-300">
+            <li>• Alarm not ringing → Check volume & notifications</li>
+            <li>• Timer stopped → Keep browser tab active</li>
+            <li>• Wrong time displayed → Check device time zone</li>
+            <li>• Page not loading → Clear browser cache</li>
+            <li>• Features not working → Disable ad blockers</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-green-400 mb-3">✅ Best Practices</h3>
+          <ul class="space-y-2 text-gray-300">
+            <li>• Keep browser tab open and visible</li>
+            <li>• Allow sound notifications</li>
+            <li>• Use latest browser version</li>
+            <li>• Stable internet connection</li>
+            <li>• Set backup alarms for critical events</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal Links -->
+    <div class="text-center">
+      <div class="glass-effect rounded-xl p-6 premium-shadow">
+        <h3 class="text-xl font-bold mb-4 text-white">Legal & Privacy</h3>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="privacy-policy.html" class="text-blue-400 hover:text-blue-300 transition-colors">Privacy Policy</a>
+          <span class="text-gray-500">•</span>
+          <a href="terms-conditions.html" class="text-blue-400 hover:text-blue-300 transition-colors">Terms & Conditions</a>
+          <span class="text-gray-500">•</span>
+          <a href="index.html" class="text-blue-400 hover:text-blue-300 transition-colors">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+    const body = document.body;
+
+    function toggleTheme() {
+      const isDark = body.classList.contains('dark-mode');
+      
+      if (isDark) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      }
+    }
+
+    // Theme initialization
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      }
+    })();
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // Contact form handling
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show success message
+      document.getElementById('form-success').classList.remove('hidden');
+      
+      // Reset form
+      this.reset();
+      
+      // Scroll to success message
+      document.getElementById('form-success').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

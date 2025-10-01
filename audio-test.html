@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Test - Online Alarm</title>
+    <meta name="description" content="Test audio functionality for Online Alarm. Verify sound alerts and alarm audio work properly in your browser.">
+    <meta name="keywords" content="audio test, alarm sound test, browser audio, sound verification, alarm audio test">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onlinealarmblogs.com/audio-test.html">
+    <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/audio-test.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .success { background: #065f46; }
+        .error { background: #7f1d1d; }
+        .info { background: #1e40af; }
+    </style>
+</head>
+<body>
+    <h1>🔊 Audio Test for Online Alarm</h1>
+    
+    <div id="status" class="status info">
+        Testing audio system...
+    </div>
+    
+    <div>
+        <button class="test-button" onclick="testSound('classic')">🔔 Test Classic Bell</button>
+        <button class="test-button" onclick="testSound('digital')">📱 Test Digital Beep</button>
+        <button class="test-button" onclick="testSound('chime')">🎵 Test Gentle Chime</button>
+        <button class="test-button" onclick="testSound('buzzer')">🚨 Test Buzzer</button>
+        <button class="test-button" onclick="testSound('birds')">🐦 Test Morning Birds</button>
+    </div>
+    
+    <div>
+        <button class="test-button" onclick="testAlarmLoop()">⏰ Test Alarm Loop</button>
+        <button class="test-button" onclick="stopAllSounds()">⏹️ Stop All Sounds</button>
+    </div>
+    
+    <div id="info" style="margin-top: 30px; padding: 20px; background: #374151; border-radius: 8px;">
+        <h3>Audio System Information:</h3>
+        <div id="audio-info"></div>
+    </div>
+
+    <script>
+        let audioContext;
+        let currentAlarm = null;
+        let alarmInterval = null;
+        
+        // Initialize audio context
+        function initAudio() {
+            try {
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+                
+                if (audioContext.state === 'suspended') {
+                    updateStatus('Audio context suspended. Click any button to enable.', 'info');
+                } else {
+                    updateStatus('Audio context ready!', 'success');
+                }
+                
+                updateAudioInfo();
+            } catch (e) {
+                updateStatus('Web Audio API not supported: ' + e.message, 'error');
+            }
+        }
+        
+        // Generate different alarm sounds
+        function generateSound(sound, volume = 0.5, loop = false) {
+            if (!audioContext || audioContext.state !== 'running') {
+                audioContext.resume();
+            }
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+                
+                // Configure sound based on type
+                switch (sound) {
+                    case 'classic':
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                        break;
+                        
+                    case 'digital':
+                        oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+                        oscillator.type = 'square';
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        break;
+                        
+                    case 'chime':
+                        oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                        gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.1);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.0);
+                        break;
+                        
+                    case 'buzzer':
+                        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                        oscillator.type = 'sawtooth';
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                        break;
+                        
+                    case 'birds':
+                        oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                        break;
+                        
+                    default:
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        oscillator.type = 'sine';
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                }
+                
+                oscillator.start(audioContext.currentTime);
+                
+                if (loop) {
+                    const duration = 2.0;
+                    oscillator.stop(audioContext.currentTime + duration);
+                    
+                    // Set up looping
+                    alarmInterval = setInterval(() => {
+                        if (currentAlarm) {
+                            generateSound(sound, volume, false);
+                        } else {
+                            clearInterval(alarmInterval);
+                        }
+                    }, duration * 1000);
+                } else {
+                    const duration = sound === 'chime' ? 1.0 : 0.8;
+                    oscillator.stop(audioContext.currentTime + duration);
+                }
+                
+                updateStatus(`Playing ${sound} sound...`, 'success');
+                return true;
+                
+            } catch (error) {
+                updateStatus('Error generating sound: ' + error.message, 'error');
+                return false;
+            }
+        }
+        
+        // Test individual sounds
+        function testSound(sound) {
+            if (currentAlarm) {
+                stopAllSounds();
+            }
+            generateSound(sound, 0.5, false);
+        }
+        
+        // Test alarm loop
+        function testAlarmLoop() {
+            if (currentAlarm) {
+                stopAllSounds();
+            } else {
+                currentAlarm = { sound: 'classic' };
+                generateSound('classic', 0.5, true);
+                updateStatus('Alarm loop started. Click "Stop All Sounds" to stop.', 'info');
+            }
+        }
+        
+        // Stop all sounds
+        function stopAllSounds() {
+            currentAlarm = null;
+            if (alarmInterval) {
+                clearInterval(alarmInterval);
+                alarmInterval = null;
+            }
+            updateStatus('All sounds stopped.', 'success');
+        }
+        
+        // Update status display
+        function updateStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        // Update audio info
+        function updateAudioInfo() {
+            const info = document.getElementById('audio-info');
+            if (audioContext) {
+                info.innerHTML = `
+                    <p><strong>Audio Context State:</strong> ${audioContext.state}</p>
+                    <p><strong>Sample Rate:</strong> ${audioContext.sampleRate} Hz</p>
+                    <p><strong>Audio Worklet:</strong> ${audioContext.audioWorklet ? 'Supported' : 'Not Supported'}</p>
+                    <p><strong>Base Latency:</strong> ${audioContext.baseLatency ? audioContext.baseLatency.toFixed(3) + 's' : 'Unknown'}</p>
+                `;
+            } else {
+                info.innerHTML = '<p>Audio context not available</p>';
+            }
+        }
+        
+        // Initialize on page load
+        window.addEventListener('load', initAudio);
+        
+        // Enable audio on any interaction
+        document.addEventListener('click', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+                updateStatus('Audio context resumed!', 'success');
+                updateAudioInfo();
+            }
+        });
+    </script>
+</body>
+</html>

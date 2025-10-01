@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Calculator - Calculate Days Between Dates & Add/Subtract Days</title>
+  <meta name="description" content="Free online date calculator to count days between dates, add or subtract days from any date. Perfect for planning events, calculating age, and date math.">
+  <meta name="keywords" content="date calculator, days between dates, add days, subtract days, date math, calculate age, date difference">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/date-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/date-calculator.html">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Date Calculator",
+    "description": "Free online date calculator for date arithmetic and calculations",
+    "url": "https://onlinealarmblogs.com/date-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "featureList": [
+      "Count Days Between Dates",
+      "Add Days to Date",
+      "Subtract Days from Date",
+      "Date Arithmetic",
+      "Age Calculator"
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af, #7c3aed, #dc2626, #ca8a04);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body.light-mode .tab-button.active {
+      border-bottom: 2px solid #1e40af;
+      color: #1e293b;
+    }
+
+    body.light-mode .tab-button:not(.active) {
+      color: #64748b;
+    }
+
+    body.light-mode .tab-button:hover:not(.active) {
+      color: #374151;
+    }
+
+    body.light-mode .date-input {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(30, 64, 175, 0.3);
+      color: #1e293b;
+    }
+
+    body.light-mode .date-input:focus {
+      border-color: #1e40af;
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    }
+
+    body.light-mode .calculate-btn {
+      background: linear-gradient(135deg, #1e40af, #7c3aed);
+    }
+
+    body.light-mode .today-link {
+      color: #1e40af;
+    }
+
+    body.light-mode .today-link:hover {
+      color: #1d4ed8;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b;
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569;
+    }
+
+    body.light-mode .text-blue-400 {
+      color: #2563eb;
+    }
+
+    body.light-mode .text-green-400 {
+      color: #16a34a;
+    }
+
+    body.light-mode .text-red-400 {
+      color: #dc2626;
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-premium:hover::before {
+      left: 100%;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .floating-animation {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .premium-shadow {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+    
+    .tab-button.active {
+      border-bottom: 2px solid #60a5fa;
+      color: #ffffff;
+    }
+    
+    .tab-button:not(.active) {
+      color: #9ca3af;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .tab-button:hover:not(.active) {
+      color: #d1d5db;
+    }
+    
+    .date-input {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .date-input:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+    
+    .calculate-btn {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      transition: all 0.3s ease;
+    }
+    
+    .calculate-btn:hover {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    .today-link {
+      color: #60a5fa;
+      transition: all 0.3s ease;
+    }
+    
+    .today-link:hover {
+      color: #93c5fd;
+      text-decoration: underline;
+    }
+
+    /* Dark mode form element styling */
+    .dark-mode-input {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    .dark-mode-input:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Date and datetime-local input styling for dark mode */
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"] {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    input[type="date"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="time"]:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Number input styling for dark mode */
+    input[type="number"] {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    input[type="number"]:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 82, 246, 0.1) !important;
+    }
+
+    /* Select dropdown styling for dark mode */
+    select {
+      background: white !important;
+      color: #1f2937 !important;
+      border-color: #d1d5db !important;
+    }
+
+    select:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Calendar icon styling */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0) !important;
+      opacity: 1 !important;
+    }
+
+    /* Range slider styling for dark mode */
+    input[type="range"] {
+      background: #e5e7eb !important;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      background: #3b82f6 !important;
+      border: 2px solid white !important;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      background: #3b82f6 !important;
+      border: 2px solid white !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white overflow-x-hidden dark-mode">
+  <!-- Back to Home Button - Top -->
+  <div class="fixed top-6 left-6 z-40">
+    <a 
+      href="index.html" 
+      class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span class="text-lg font-medium">Back to Home</span>
+    </a>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <div class="fixed top-6 right-6 z-40">
+    <button id="dark-mode-toggle" class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg">
+      <svg id="dark-icon" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg id="light-icon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 0012 21a9 9 0 009-9 9 9 0 00-1.646-5.646z"></path>
+      </svg>
+      <span class="text-lg font-medium">Toggle Theme</span>
+    </button>
+  </div>
+
+  <!-- Header -->
+  <div class="text-center py-12">
+    <h1 class="text-5xl md:text-6xl font-bold gradient-text floating-animation mb-4">Date Calculator</h1>
+    <p class="text-xl text-gray-300 max-w-2xl mx-auto">Calculate days between dates, add or subtract days from a date</p>
+  </div>
+
+  <!-- Main Calculator Container -->
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="glass-effect rounded-2xl p-8 premium-shadow">
+      
+      <!-- Tab Navigation -->
+      <div class="flex border-b border-gray-700 mb-8">
+        <button 
+          class="tab-button px-6 py-3 text-lg font-semibold transition-all duration-300" 
+          onclick="switchTab('count')"
+          id="count-tab"
+        >
+          Count Days
+        </button>
+        <button 
+          class="tab-button px-6 py-3 text-lg font-semibold transition-all duration-300" 
+          onclick="switchTab('add')"
+          id="add-tab"
+        >
+          Add Days
+        </button>
+        <button 
+          class="tab-button px-6 py-3 text-lg font-semibold transition-all duration-300" 
+          onclick="switchTab('subtract')"
+          id="subtract-tab"
+        >
+          Subtract Days
+        </button>
+      </div>
+
+      <!-- Count Days Tab -->
+      <div id="count-content" class="tab-content">
+        <div class="space-y-6">
+          <!-- Start Date -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">Start date</label>
+            <div class="flex items-center gap-3">
+              <input 
+                type="date" 
+                id="start-date" 
+                class="date-input flex-1 px-4 py-3 rounded-xl text-white focus:outline-none"
+              >
+              <button onclick="setToday('start-date')" class="today-link text-sm font-medium">Today</button>
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">End date</label>
+            <div class="flex items-center gap-3">
+              <input 
+                type="date" 
+                id="end-date" 
+                class="date-input flex-1 px-4 py-3 rounded-xl text-white focus:outline-none"
+              >
+              <button onclick="setToday('end-date')" class="today-link text-sm font-medium">Today</button>
+            </div>
+          </div>
+
+          <!-- Include End Date Option -->
+          <div class="flex items-center justify-between">
+            <span class="text-white">Include the end date in calculation (+1 day)</span>
+            <input 
+              type="checkbox" 
+              id="include-end-date" 
+              class="w-5 h-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+            >
+          </div>
+
+          <!-- Calculate Button -->
+          <button 
+            onclick="calculateDuration()" 
+            class="calculate-btn w-full py-4 px-6 rounded-xl text-white font-semibold text-lg shadow-lg"
+          >
+            Calculate Duration
+          </button>
+
+          <!-- Result Display -->
+          <div id="count-result" class="hidden text-center py-6">
+            <div class="text-3xl font-bold text-blue-400 mb-2" id="duration-result"></div>
+            <div class="text-gray-300" id="duration-details"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Days Tab -->
+      <div id="add-content" class="tab-content hidden">
+        <div class="space-y-6">
+          <!-- Start Date -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">Start date</label>
+            <div class="flex items-center gap-3">
+              <input 
+                type="date" 
+                id="add-start-date" 
+                class="date-input flex-1 px-4 py-3 rounded-xl text-white focus:outline-none"
+              >
+              <button onclick="setToday('add-start-date')" class="today-link text-sm font-medium">Today</button>
+            </div>
+          </div>
+
+          <!-- Days to Add -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">Days to add</label>
+            <input 
+              type="number" 
+              id="days-to-add" 
+              min="1" 
+              value="1"
+              class="date-input w-full px-4 py-3 rounded-xl text-white focus:outline-none"
+              placeholder="Enter number of days"
+            >
+          </div>
+
+          <!-- Calculate Button -->
+          <button 
+            onclick="calculateAddDays()" 
+            class="calculate-btn w-full py-4 px-6 rounded-xl text-white font-semibold text-lg shadow-lg"
+          >
+            Calculate New Date
+          </button>
+
+          <!-- Result Display -->
+          <div id="add-result" class="hidden text-center py-6">
+            <div class="text-3xl font-bold text-green-400 mb-2" id="add-result-date"></div>
+            <div class="text-gray-300" id="add-result-details"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtract Days Tab -->
+      <div id="subtract-content" class="tab-content hidden">
+        <div class="space-y-6">
+          <!-- Start Date -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">Start date</label>
+            <div class="flex items-center gap-3">
+              <input 
+                type="date" 
+                id="subtract-start-date" 
+                class="date-input flex-1 px-4 py-3 rounded-xl text-white focus:outline-none"
+              >
+              <button onclick="setToday('subtract-start-date')" class="today-link text-sm font-medium">Today</button>
+            </div>
+          </div>
+
+          <!-- Days to Subtract -->
+          <div>
+            <label class="block text-white text-sm font-medium mb-2">Days to subtract</label>
+            <input 
+              type="number" 
+              id="days-to-subtract" 
+              min="1" 
+              value="1"
+              class="date-input w-full px-4 py-3 rounded-xl text-white focus:outline-none"
+              placeholder="Enter number of days"
+            >
+          </div>
+
+          <!-- Calculate Button -->
+          <button 
+            onclick="calculateSubtractDays()" 
+            class="calculate-btn w-full py-4 px-6 rounded-xl text-white font-semibold text-lg shadow-lg"
+          >
+            Calculate New Date
+          </button>
+
+          <!-- Result Display -->
+          <div id="subtract-result" class="hidden text-center py-6">
+            <div class="text-3xl font-bold text-red-400 mb-2" id="subtract-result-date"></div>
+            <div class="text-gray-300" id="subtract-result-details"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Information Section -->
+  <div class="max-w-6xl mx-auto px-6 mt-12 mb-16">
+    <div class="glass-effect rounded-2xl p-8 premium-shadow">
+      <h2 class="text-2xl font-bold text-white mb-4">What Is the Date Calculator?</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Our comprehensive date calculator lets you perform three essential date calculations:
+      </p>
+      <ul class="text-gray-300 mt-4 space-y-2">
+        <li class="flex items-start">
+          <span class="text-blue-400 mr-2">•</span>
+          <span><strong>Count Days:</strong> Calculate the exact number of days between two dates, with an option to include the end date.</span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-green-400 mr-2">•</span>
+          <span><strong>Add Days:</strong> Add a specific number of days to any date to find a future date.</span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-red-400 mr-2">•</span>
+          <span><strong>Subtract Days:</strong> Subtract a specific number of days from any date to find a past date.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- How to Use Guide Section -->
+  <div class="max-w-6xl mx-auto p-6">
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">How to Use the Date Calculator</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Date Difference -->
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-600/20 rounded-2xl p-6 border border-blue-500/20">
+          <div class="text-3xl mb-4">📅</div>
+          <h3 class="text-xl font-bold text-blue-400 mb-4">Calculate Date Difference</h3>
+          <ol class="text-gray-300 space-y-3 text-sm list-decimal list-inside">
+            <li><strong>Select Start Date:</strong> Click the first date picker to choose your starting date</li>
+            <li><strong>Select End Date:</strong> Click the second date picker to choose your ending date</li>
+            <li><strong>View Results:</strong> See the difference in years, months, days, and total days</li>
+            <li><strong>Detailed Breakdown:</strong> Get precise calculations including business days</li>
+            <li><strong>Copy Results:</strong> Click to copy the calculated difference to clipboard</li>
+          </ol>
+        </div>
+
+        <!-- Add/Subtract Days -->
+        <div class="bg-gradient-to-br from-green-500/10 to-green-600/20 rounded-2xl p-6 border border-green-500/20">
+          <div class="text-3xl mb-4">➕</div>
+          <h3 class="text-xl font-bold text-green-400 mb-4">Add/Subtract Days</h3>
+          <ol class="text-gray-300 space-y-3 text-sm list-decimal list-inside">
+            <li><strong>Choose Base Date:</strong> Select your starting date using the date picker</li>
+            <li><strong>Enter Number:</strong> Type the number of days to add or subtract</li>
+            <li><strong>Select Operation:</strong> Choose to add (+) or subtract (-) days</li>
+            <li><strong>Get Result:</strong> See the calculated future or past date instantly</li>
+            <li><strong>Plan Ahead:</strong> Perfect for calculating deadlines and schedules</li>
+          </ol>
+        </div>
+
+        <!-- Age Calculator -->
+        <div class="bg-gradient-to-br from-purple-500/10 to-purple-600/20 rounded-2xl p-6 border border-purple-500/20">
+          <div class="text-3xl mb-4">🎂</div>
+          <h3 class="text-xl font-bold text-purple-400 mb-4">Age Calculation</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Exact Age:</strong> Calculate your precise age in years, months, and days</li>
+            <li><strong>Birth Date to Today:</strong> Use current date as end date for age calculation</li>
+            <li><strong>Future Age:</strong> Calculate how old you'll be on a specific future date</li>
+            <li><strong>Multiple Formats:</strong> View age in different time units</li>
+            <li><strong>Leap Year Support:</strong> Accurate calculations including leap year handling</li>
+          </ul>
+        </div>
+
+        <!-- Business Applications -->
+        <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-600/20 rounded-2xl p-6 border border-yellow-500/20">
+          <div class="text-3xl mb-4">💼</div>
+          <h3 class="text-xl font-bold text-yellow-400 mb-4">Business Use Cases</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Project Planning:</strong> Calculate project durations and milestones</li>
+            <li><strong>Contract Terms:</strong> Determine contract periods and renewal dates</li>
+            <li><strong>Employee Benefits:</strong> Calculate vacation days and employment periods</li>
+            <li><strong>Invoice Due Dates:</strong> Add payment terms to invoice dates</li>
+            <li><strong>Event Planning:</strong> Calculate event preparation timelines</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20">
+        <h4 class="text-lg font-bold text-blue-400 mb-3">📊 Popular Calculations</h4>
+        <div class="text-gray-300 text-sm space-y-2">
+          <p><strong>Personal:</strong> Age calculation, birthday countdowns, anniversary dates, vacation planning</p>
+          <p><strong>Business:</strong> Project timelines, contract periods, payment due dates, employee tenure</p>
+          <p><strong>Academic:</strong> Semester lengths, assignment due dates, graduation timelines, exam schedules</p>
+          <p><strong>Health:</strong> Pregnancy due dates, medication schedules, treatment timelines</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set default dates to today
+      setToday('start-date');
+      setToday('end-date');
+      setToday('add-start-date');
+      setToday('subtract-start-date');
+      
+      // Set first tab as active
+      switchTab('count');
+
+      // Dark mode toggle functionality
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      const darkIcon = document.getElementById('dark-icon');
+      const lightIcon = document.getElementById('light-icon');
+
+      function toggleDarkMode() {
+        const body = document.body;
+        const isDark = body.classList.contains('dark-mode');
+        
+        if (isDark) {
+          // Switch to light mode
+          body.classList.remove('dark-mode');
+          body.classList.add('light-mode');
+          localStorage.setItem('theme', 'light');
+          
+          // Update icons
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+        } else {
+          // Switch to dark mode
+          body.classList.remove('light-mode');
+          body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+          
+          // Update icons
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        }
+      }
+
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+      }
+
+      // Theme on load
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+          // Light mode
+          document.body.classList.remove('dark-mode');
+          document.body.classList.add('light-mode');
+          
+          if (darkIcon && lightIcon) {
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+          }
+        } else {
+          // Dark mode (default)
+          document.body.classList.remove('light-mode');
+          document.body.classList.add('dark-mode');
+          
+          if (darkIcon && lightIcon) {
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+          }
+        }
+      })();
+    });
+
+    // Switch between tabs
+    function switchTab(tabName) {
+      // Hide all tab contents
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.add('hidden'));
+      
+      // Remove active class from all tabs
+      const tabs = document.querySelectorAll('.tab-button');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // Show selected tab content
+      document.getElementById(tabName + '-content').classList.remove('hidden');
+      
+      // Add active class to selected tab
+      document.getElementById(tabName + '-tab').classList.add('active');
+      
+      // Hide all results
+      hideAllResults();
+    }
+
+    // Set date to today
+    function setToday(inputId) {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById(inputId).value = today;
+    }
+
+    // Calculate duration between dates
+    function calculateDuration() {
+      const startDate = new Date(document.getElementById('start-date').value);
+      const endDate = new Date(document.getElementById('end-date').value);
+      const includeEndDate = document.getElementById('include-end-date').checked;
+      
+      if (!startDate || !endDate) {
+        alert('Please select both start and end dates');
+        return;
+      }
+      
+      if (startDate > endDate) {
+        alert('Start date cannot be after end date');
+        return;
+      }
+      
+      let diffTime = endDate - startDate;
+      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (includeEndDate) {
+        diffDays += 1;
+      }
+      
+      const resultDiv = document.getElementById('count-result');
+      const durationResult = document.getElementById('duration-result');
+      const durationDetails = document.getElementById('duration-details');
+      
+      durationResult.textContent = `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+      durationDetails.textContent = `From ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
+      
+      resultDiv.classList.remove('hidden');
+    }
+
+    // Calculate date after adding days
+    function calculateAddDays() {
+      const startDate = new Date(document.getElementById('add-start-date').value);
+      const daysToAdd = parseInt(document.getElementById('days-to-add').value);
+      
+      if (!startDate || !daysToAdd) {
+        alert('Please select a start date and enter days to add');
+        return;
+      }
+      
+      const newDate = new Date(startDate);
+      newDate.setDate(startDate.getDate() + daysToAdd);
+      
+      const resultDiv = document.getElementById('add-result');
+      const addResultDate = document.getElementById('add-result-date');
+      const addResultDetails = document.getElementById('add-result-details');
+      
+      addResultDate.textContent = newDate.toLocaleDateString();
+      addResultDetails.textContent = `${daysToAdd} day${daysToAdd !== 1 ? 's' : ''} after ${startDate.toLocaleDateString()}`;
+      
+      resultDiv.classList.remove('hidden');
+    }
+
+    // Calculate date after subtracting days
+    function calculateSubtractDays() {
+      const startDate = new Date(document.getElementById('subtract-start-date').value);
+      const daysToSubtract = parseInt(document.getElementById('days-to-subtract').value);
+      
+      if (!startDate || !daysToSubtract) {
+        alert('Please select a start date and enter days to subtract');
+        return;
+      }
+      
+      const newDate = new Date(startDate);
+      newDate.setDate(startDate.getDate() - daysToSubtract);
+      
+      const resultDiv = document.getElementById('subtract-result');
+      const subtractResultDate = document.getElementById('subtract-result-date');
+      const subtractResultDetails = document.getElementById('subtract-result-details');
+      
+      subtractResultDate.textContent = newDate.toLocaleDateString();
+      subtractResultDetails.textContent = `${daysToSubtract} day${daysToSubtract !== 1 ? 's' : ''} before ${startDate.toLocaleDateString()}`;
+      
+      resultDiv.classList.remove('hidden');
+    }
+
+    // Hide all result displays
+    function hideAllResults() {
+      const results = ['count-result', 'add-result', 'subtract-result'];
+      results.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add('hidden');
+        }
+      });
+    }
+    // Update copyright year
+    function updateCurrentYear() {
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+  </script>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold gradient-text mb-4">Online Alarm</h3>
+          <p class="text-gray-300 mb-4 leading-relaxed">
+            Free online time management tools including alarm clock, timer, stopwatch, countdown, and world clock. 
+            No download required - works on all devices with precision timing.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Tools</h4>
+          <ul class="space-y-2">
+            <li><a href="online-alarm.html" class="text-gray-200 hover:text-blue-400 transition-colors">Alarm Clock</a></li>
+            <li><a href="online-timer.html" class="text-gray-200 hover:text-blue-400 transition-colors">Timer</a></li>
+            <li><a href="online-stopwatch.html" class="text-gray-200 hover:text-blue-400 transition-colors">Stopwatch</a></li>
+            <li><a href="online-countdown.html" class="text-gray-200 hover:text-blue-400 transition-colors">Countdown</a></li>
+            <li><a href="world-clock.html" class="text-gray-200 hover:text-blue-400 transition-colors">World Clock</a></li>
+            <li><a href="date-calculator.html" class="text-gray-200 hover:text-blue-400 transition-colors">Date Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Legal -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact & Support</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © <span id="current-year"></span> Online Alarm. All rights reserved. Free online time tools for everyone.
+        </p>
+        <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+          <a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms</a>
+          <a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

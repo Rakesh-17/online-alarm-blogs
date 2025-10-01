@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Time Management Blog - Tips, Guides & Best Practices | Online Alarm</title>
+  <meta name="description" content="Expert time management tips, productivity guides, and alarm clock best practices. Learn how to optimize your daily schedule, improve productivity, and master time management with our comprehensive blog.">
+  <meta name="keywords" content="time management, productivity tips, alarm clock guide, time management blog, productivity blog, schedule optimization, time tracking, work-life balance">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/blog.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/blog.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://onlinealarmblogs.com/blog.html">
+  <meta property="og:title" content="Time Management Blog - Tips & Guides">
+  <meta property="og:description" content="Expert time management tips, productivity guides, and best practices. Learn to optimize your schedule and improve productivity.">
+  <meta property="og:image" content="https://onlinealarmblogs.com/images/blog-og-image.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://onlinealarmblogs.com/blog.html">
+  <meta property="twitter:title" content="Time Management Blog - Tips & Guides">
+  <meta property="twitter:description" content="Expert time management tips, productivity guides, and best practices.">
+  <meta property="twitter:image" content="https://onlinealarmblogs.com/images/blog-twitter-image.png">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Time Management Blog",
+    "description": "Expert time management tips, productivity guides, and alarm clock best practices",
+    "url": "https://onlinealarmblogs.com/blog.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Online Alarm",
+      "url": "https://onlinealarmblogs.com"
+    },
+    "mainEntityOfPage": "https://onlinealarmblogs.com/blog.html"
+  }
+  </script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      color: #1e293b !important;
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #dc2626 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569 !important;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b !important;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b !important;
+    }
+
+    .glass-effect {
+      background: rgba(31, 41, 55, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .premium-shadow {
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .blog-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    .read-time {
+      color: #9ca3af;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white overflow-x-hidden dark-mode">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="text-2xl font-bold gradient-text">Online Alarm</a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-6">
+          <a href="index.html" class="text-gray-300 hover:text-blue-400 transition-colors">Home</a>
+          <a href="online-alarm.html" class="text-gray-300 hover:text-blue-400 transition-colors">Alarm</a>
+          <a href="online-timer.html" class="text-gray-300 hover:text-blue-400 transition-colors">Timer</a>
+          <a href="online-stopwatch.html" class="text-gray-300 hover:text-blue-400 transition-colors">Stopwatch</a>
+          <a href="blog.html" class="text-blue-400 font-semibold">Blog</a>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg glass-effect hover:bg-white/10 transition-colors">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="pt-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">Time Management Blog</h1>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          Expert tips, guides, and best practices for mastering time management, productivity, and making the most of your day
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span class="tag">Productivity Tips</span>
+          <span class="tag">Time Management</span>
+          <span class="tag">Alarm Strategies</span>
+          <span class="tag">Work-Life Balance</span>
+          <span class="tag">Schedule Optimization</span>
+        </div>
+      </div>
+
+      <!-- Featured Article -->
+      <div class="glass-effect rounded-3xl p-8 mb-16 premium-shadow">
+        <div class="text-center mb-6">
+          <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Featured Article</span>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 class="text-3xl font-bold text-white mb-4">The Ultimate Guide to Morning Routines: How Alarm Strategies Can Transform Your Day</h2>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Discover how strategic alarm setting can revolutionize your morning routine and boost productivity throughout the day. 
+              Learn proven techniques used by successful entrepreneurs and productivity experts.
+            </p>
+            <div class="flex items-center gap-4 mb-4">
+              <span class="read-time">📖 15 min read</span>
+              <span class="tag">Morning Routine</span>
+              <span class="tag">Productivity</span>
+            </div>
+            <a href="morning-routine-guide.html" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 inline-block">
+              Read Full Article
+            </a>
+          </div>
+          <div class="text-8xl text-center opacity-50">⏰</div>
+        </div>
+      </div>
+
+      <!-- Blog Categories -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-center gradient-text mb-8">Explore Our Categories</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-effect rounded-2xl p-6 text-center blog-card">
+            <div class="text-4xl mb-4">⏰</div>
+            <h3 class="text-xl font-bold text-white mb-2">Alarm Strategies</h3>
+            <p class="text-gray-300 text-sm mb-4">Master the art of effective wake-up routines and alarm optimization</p>
+            <span class="text-blue-400 text-sm">12 Articles</span>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center blog-card">
+            <div class="text-4xl mb-4">📊</div>
+            <h3 class="text-xl font-bold text-white mb-2">Productivity</h3>
+            <p class="text-gray-300 text-sm mb-4">Proven techniques to boost efficiency and get more done</p>
+            <span class="text-blue-400 text-sm">18 Articles</span>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center blog-card">
+            <div class="text-4xl mb-4">⚖️</div>
+            <h3 class="text-xl font-bold text-white mb-2">Work-Life Balance</h3>
+            <p class="text-gray-300 text-sm mb-4">Strategies for maintaining healthy boundaries and reducing stress</p>
+            <span class="text-blue-400 text-sm">15 Articles</span>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center blog-card">
+            <div class="text-4xl mb-4">🎯</div>
+            <h3 class="text-xl font-bold text-white mb-2">Goal Setting</h3>
+            <p class="text-gray-300 text-sm mb-4">Time-based approaches to achieving your personal and professional goals</p>
+            <span class="text-blue-400 text-sm">10 Articles</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Latest Articles -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-center gradient-text mb-8">Latest Articles</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Article 1 -->
+          <a href="wake-up-strategies-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">🌅</div>
+            <h3 class="text-xl font-bold text-white mb-3">5 Science-Backed Wake-Up Strategies That Actually Work</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Discover evidence-based methods to make waking up easier and more energizing. From light therapy to strategic napping schedules.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 15 min read</span>
+              <span class="tag">Sleep Science</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 2 -->
+          <a href="pomodoro-technique-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">⏱️</div>
+            <h3 class="text-xl font-bold text-white mb-3">The Complete Pomodoro Technique Guide: Master Focus and Productivity</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Master this popular time management method with our comprehensive guide and advanced timer techniques for maximum productivity.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 18 min read</span>
+              <span class="tag">Time Blocking</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 3 -->
+          <a href="digital-detox-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">📱</div>
+            <h3 class="text-xl font-bold text-white mb-3">Digital Detox: Using Alarms to Create Tech-Free Zones</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Learn how strategic alarm use can help you establish healthy boundaries with technology and improve mental well-being.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 7 min read</span>
+              <span class="tag">Digital Wellness</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 4 -->
+          <a href="workout-timing-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">🏃</div>
+            <h3 class="text-xl font-bold text-white mb-3">Time Your Workouts: The Complete Guide to Exercise Scheduling</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Optimize your fitness routine with strategic timing. Learn when and how to schedule workouts for maximum results and consistency.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 12 min read</span>
+              <span class="tag">Fitness</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 5 -->
+          <a href="remote-work-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">💼</div>
+            <h3 class="text-xl font-bold text-white mb-3">Remote Work Time Management: Tools and Techniques</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Essential strategies for managing time effectively while working from home. Includes countdown techniques and schedule optimization.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 9 min read</span>
+              <span class="tag">Remote Work</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 6 -->
+          <a href="mindful-time-management.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">🧘</div>
+            <h3 class="text-xl font-bold text-white mb-3">Mindful Time Management: Meditation and Productivity</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Combine mindfulness practices with time management for reduced stress and increased focus. Practical meditation timing strategies.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 8 min read</span>
+              <span class="tag">Mindfulness</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 7 -->
+          <a href="top-watch-brands-history.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">⌚</div>
+            <h3 class="text-xl font-bold text-white mb-3">Top 10 Watch Brands and Their Fascinating History</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Discover the rich heritage of the world's most prestigious watch brands, from Patek Philippe to Rolex and beyond.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 20 min read</span>
+              <span class="tag">Watch Heritage</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 8 -->
+          <a href="luxury-watches-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">💎</div>
+            <h3 class="text-xl font-bold text-white mb-3">Top 25 Luxury Watches: Ultimate Collector's Guide</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Explore the world's most coveted luxury timepieces with investment insights and collector expertise.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 25 min read</span>
+              <span class="tag">Luxury Collection</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+          <!-- Article 9 -->
+          <a href="watch-collecting-guide.html" class="glass-effect rounded-2xl p-6 blog-card block">
+            <div class="text-3xl mb-4">🎯</div>
+            <h3 class="text-xl font-bold text-white mb-3">Complete Watch Collecting Guide: From Beginner to Expert</h3>
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+              Master the art of watch collecting with authentication tips, investment strategies, and expert insights.
+            </p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="read-time">📖 22 min read</span>
+              <span class="tag">Collector's Guide</span>
+            </div>
+            <div class="text-blue-400 text-sm hover:text-blue-300 transition-colors">Read more →</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Popular Topics -->
+      <div class="glass-effect rounded-3xl p-8 mb-16 premium-shadow">
+        <h2 class="text-3xl font-bold text-center gradient-text mb-8">Popular Topics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-bold text-blue-400 mb-4">🎯 Most Read Articles</h3>
+            <ul class="space-y-3">
+              <li><a href="morning-routine-guide.html" class="text-gray-300 hover:text-blue-400 transition-colors">→ How to Wake Up at 5 AM Without Feeling Tired</a></li>
+              <li><a href="pomodoro-technique-guide.html" class="text-gray-300 hover:text-blue-400 transition-colors">→ The 2-Minute Rule for Better Productivity</a></li>
+              <li><a href="top-watch-brands-history.html" class="text-gray-300 hover:text-blue-400 transition-colors">→ Top 10 Luxury Watch Brands and Their History</a></li>
+              <li><a href="morning-routine-guide.html" class="text-gray-300 hover:text-blue-400 transition-colors">→ Creating the Perfect Night Routine</a></li>
+              <li><a href="luxury-watches-guide.html" class="text-gray-300 hover:text-blue-400 transition-colors">→ Ultimate Guide to Luxury Watch Collecting</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-purple-400 mb-4">🔥 Trending Now</h3>
+            <ul class="space-y-3">
+              <li><a href="pomodoro-technique-guide.html" class="text-gray-300 hover:text-purple-400 transition-colors">→ AI and Time Management: Future Trends</a></li>
+              <li><a href="morning-routine-guide.html" class="text-gray-300 hover:text-purple-400 transition-colors">→ Seasonal Time Management Strategies</a></li>
+              <li><a href="pomodoro-technique-guide.html" class="text-gray-300 hover:text-purple-400 transition-colors">→ Productivity Apps vs. Traditional Methods</a></li>
+              <li><a href="morning-routine-guide.html" class="text-gray-300 hover:text-purple-400 transition-colors">→ Time Management for Students</a></li>
+              <li><a href="world-clock.html" class="text-gray-300 hover:text-purple-400 transition-colors">→ Managing Multiple Time Zones</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter Signup -->
+      <div class="glass-effect rounded-3xl p-8 mb-16 premium-shadow text-center">
+        <h2 class="text-3xl font-bold gradient-text mb-4">Stay Updated</h2>
+        <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+          Get the latest time management tips, productivity hacks, and exclusive guides delivered straight to your inbox. 
+          Join over 10,000 subscribers who are mastering their time.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-400">
+          <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
+            Subscribe
+          </button>
+        </div>
+        <p class="text-gray-400 text-sm mt-4">No spam. Unsubscribe anytime.</p>
+      </div>
+
+      <!-- Tools Integration -->
+      <div class="glass-effect rounded-3xl p-8 mb-16 premium-shadow">
+        <h2 class="text-3xl font-bold text-center gradient-text mb-8">Try Our Time Management Tools</h2>
+        <p class="text-center text-gray-300 mb-8">Put these strategies into practice with our free online tools</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <a href="online-alarm.html" class="glass-effect rounded-xl p-4 text-center hover:bg-white/5 transition-colors group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">⏰</div>
+            <div class="text-white font-semibold">Alarm Clock</div>
+            <div class="text-gray-400 text-sm">Strategic wake-up timing</div>
+          </a>
+          <a href="online-timer.html" class="glass-effect rounded-xl p-4 text-center hover:bg-white/5 transition-colors group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">⏱️</div>
+            <div class="text-white font-semibold">Timer</div>
+            <div class="text-gray-400 text-sm">Pomodoro & focus sessions</div>
+          </a>
+          <a href="online-stopwatch.html" class="glass-effect rounded-xl p-4 text-center hover:bg-white/5 transition-colors group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">⏲️</div>
+            <div class="text-white font-semibold">Stopwatch</div>
+            <div class="text-gray-400 text-sm">Track time spent on tasks</div>
+          </a>
+          <a href="world-clock.html" class="glass-effect rounded-xl p-4 text-center hover:bg-white/5 transition-colors group">
+            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🌍</div>
+            <div class="text-white font-semibold">World Clock</div>
+            <div class="text-gray-400 text-sm">Global time coordination</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold gradient-text mb-4">Online Alarm</h3>
+          <p class="text-gray-300 mb-4 leading-relaxed">
+            Free online time management tools including alarm clock, timer, stopwatch, countdown, and world clock. 
+            No download required - works on all devices with precision timing.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Tools</h4>
+          <ul class="space-y-2">
+            <li><a href="online-alarm.html" class="text-white hover:text-blue-400 transition-colors">Alarm Clock</a></li>
+            <li><a href="online-timer.html" class="text-white hover:text-blue-400 transition-colors">Timer</a></li>
+            <li><a href="online-stopwatch.html" class="text-white hover:text-blue-400 transition-colors">Stopwatch</a></li>
+            <li><a href="online-countdown.html" class="text-white hover:text-blue-400 transition-colors">Countdown</a></li>
+            <li><a href="world-clock.html" class="text-white hover:text-blue-400 transition-colors">World Clock</a></li>
+            <li><a href="date-calculator.html" class="text-white hover:text-blue-400 transition-colors">Date Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Legal -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="blog.html" class="text-white hover:text-blue-400 transition-colors">Blog</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400 transition-colors">Contact & Support</a></li>
+            <li><a href="privacy-policy.html" class="text-white hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html" class="text-white hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © <span id="current-year"></span> Online Alarm. All rights reserved. Free online time tools for everyone.
+        </p>
+        <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+          <a href="privacy-policy.html" class="text-gray-400 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="terms-conditions.html" class="text-gray-400 hover:text-blue-400 transition-colors">Terms</a>
+          <a href="contact.html" class="text-gray-400 hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    function toggleDarkMode() {
+      const body = document.body;
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+      
+      body.classList.toggle('dark-mode');
+      body.classList.toggle('light-mode');
+      
+      if (body.classList.contains('light-mode')) {
+        localStorage.setItem('theme', 'light');
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      } else {
+        localStorage.setItem('theme', 'dark');
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      }
+    }
+
+    // Load theme from localStorage
+    (function() {
+      const theme = localStorage.getItem('theme');
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+      
+      if (theme === 'light') {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      } else {
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      }
+    })();
+
+    // Event listeners
+    document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
+
+    // Update copyright year
+    function updateCurrentYear() {
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+  </script>
+</body>
+</html>
