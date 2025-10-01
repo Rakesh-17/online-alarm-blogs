@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Audio Test - Online Alarm</title>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onlinealarmblogs.com/enhanced-audio-test.html">
+    <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/enhanced-audio-test.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f3460 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .sound-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            border: 2px solid #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .audio-type-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            background: #10b981;
+            color: white;
+        }
+        
+        .sound-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .sound-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .sound-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .volume-slider {
+            flex: 1;
+            height: 6px;
+        }
+        
+        .play-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .play-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .controls-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .control-button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .status-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .status-info h3 {
+            margin-top: 0;
+            color: #10b981;
+        }
+        
+        .file-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="online-alarm.html" class="back-button">← Back to Alarm</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🔊 Real Audio Test</h1>
+            <p style="color: #ccc; font-size: 1.1rem;">Test 6 unique real audio files that were downloaded from the internet</p>
+        </div>
+        
+        <div class="status-info">
+            <h3>🎵 Real Audio Files Available</h3>
+            <p><strong>Total Real Audio Files:</strong> <span id="real-audio-count">0</span></p>
+            <p style="font-size: 0.9rem; color: #ccc;">Only showing audio files that were successfully downloaded</p>
+        </div>
+        
+        <div class="controls-section">
+            <h2 style="margin-bottom: 20px;">Global Controls</h2>
+            <button class="control-button" onclick="stopAllSounds()">⏹️ Stop All Sounds</button>
+            <button class="control-button" onclick="testAlarmLoop()">⏰ Test Alarm Loop</button>
+            <button class="control-button" onclick="testRandomSound()">🎲 Random Sound</button>
+            
+            <div id="global-status" style="margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: none;">
+                Ready to test sounds
+            </div>
+        </div>
+        
+        <div class="sound-grid" id="sound-grid">
+            <!-- Only real audio files will be shown here -->
+        </div>
+        
+        <script>
+            let audioContext;
+            let currentAlarm = null;
+            let alarmInterval = null;
+            let audioElements = {};
+            
+            // Only include audio files that were successfully downloaded
+            const realAudioConfig = [
+                { id: 'iphone', name: 'iPhone Alarm', description: 'Apple\'s iconic ascending alarm pattern', icon: '📱', file: 'audio/iphone_alarm.mp3', size: '97KB' },
+                { id: 'nokia', name: 'Nokia Tune', description: 'The legendary ascending ringtone', icon: '📞', file: 'audio/nokia_ringtone.mp3', size: '182KB' },
+                { id: 'playstation', name: 'PlayStation Startup', description: 'Sony PlayStation\'s iconic startup sound', icon: '🎮', file: 'audio/playstation_startup.mp3', size: '2.7MB' },
+                { id: 'alarm1', name: 'Classic Bell', description: 'Traditional bell ringing sound', icon: '🔔', file: 'audio/alarm_1.mp3', size: '97KB' },
+                { id: 'alarm2', name: 'Ascending Chime', description: 'Beautiful ascending musical chime', icon: '🎵', file: 'audio/alarm_2.mp3', size: '182KB' },
+                { id: 'schoolbell', name: 'School Bell', description: 'Classic school bell ringing sound', icon: '🔔', file: 'audio/school_bell.mp3', size: '97KB' }
+            ];
+            
+            // Initialize audio context
+            function initAudio() {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    updateGlobalStatus('Audio context initialized!', 'success');
+                } catch (error) {
+                    updateGlobalStatus('Audio context failed to initialize', 'error');
+                }
+            }
+            
+            // Check if real audio file exists and is valid
+            async function checkAudioFile(filePath) {
+                if (!filePath) return false;
+                
+                // For local files, we'll use a different approach
+                try {
+                    // Try to create an audio element to test if the file exists
+                    const audio = new Audio(filePath);
+                    
+                    // Set up event listeners to check if the file loads
+                    return new Promise((resolve) => {
+                        let hasResolved = false;
+                        
+                        const resolveOnce = (result) => {
+                            if (!hasResolved) {
+                                hasResolved = true;
+                                resolve(result);
+                            }
+                        };
+                        
+                        // Success - file exists and is valid
+                        audio.addEventListener('canplaythrough', () => {
+                            resolveOnce(true);
+                        });
+                        
+                        // Error - file doesn't exist or is invalid
+                        audio.addEventListener('error', () => {
+                            resolveOnce(false);
+                        });
+                        
+                        // Timeout after 2 seconds
+                        setTimeout(() => {
+                            resolveOnce(false);
+                        }, 2000);
+                        
+                        // Try to load the audio
+                        audio.load();
+                    });
+                } catch (error) {
+                    console.error('Error checking file:', filePath, error);
+                    return false;
+                }
+            }
+            
+            // Generate sound cards for only real audio files
+            async function generateSoundCards() {
+                const grid = document.getElementById('sound-grid');
+                let validAudioCount = 0;
+                
+                console.log('Starting to generate sound cards...');
+                console.log('Audio config:', realAudioConfig);
+                
+                for (const config of realAudioConfig) {
+                    console.log(`Checking file: ${config.file}`);
+                    const isValid = await checkAudioFile(config.file);
+                    console.log(`File ${config.file} is valid: ${isValid}`);
+                    
+                    if (isValid) {
+                        validAudioCount++;
+                        
+                        const card = document.createElement('div');
+                        card.className = 'sound-card';
+                        card.dataset.sound = config.id;
+                        
+                        const badge = document.createElement('div');
+                        badge.className = 'audio-type-badge';
+                        badge.textContent = 'REAL';
+                        
+                        card.innerHTML = `
+                            ${badge.outerHTML}
+                            <div class="sound-icon">${config.icon}</div>
+                            <div class="sound-name">${config.name}</div>
+                            <div class="sound-description">${config.description}</div>
+                            <div class="file-info">
+                                <strong>File:</strong> ${config.file.split('/').pop()}<br>
+                                <strong>Size:</strong> ${config.size}
+                            </div>
+                            <div class="volume-control">
+                                <span>🔇</span>
+                                <input type="range" class="volume-slider" min="0.1" max="1.0" step="0.1" value="0.9">
+                                <span>🔊</span>
+                            </div>
+                            <button class="play-button" onclick="playSound('${config.id}', this)">▶️ Play Sound</button>
+                        `;
+                        
+                        grid.appendChild(card);
+                    }
+                }
+                
+                console.log(`Total valid files: ${validAudioCount}`);
+                document.getElementById('real-audio-count').textContent = validAudioCount;
+                
+                if (validAudioCount === 0) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                            <h3 style="color: #f59e0b;">⚠️ No Real Audio Files Found</h3>
+                            <p style="color: #ccc; margin-bottom: 20px;">
+                                No valid audio files were found in the audio folder.
+                            </p>
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; max-width: 600px; margin: 0 auto;">
+                                <h4 style="color: #10b981; margin-top: 0;">How to Add Real Audio Files:</h4>
+                                <ol style="text-align: left; color: #ccc;">
+                                    <li>Download real alarm sound files (MP3 format)</li>
+                                    <li>Place them in the <code>audio</code> folder</li>
+                                    <li>Make sure files are larger than 1KB</li>
+                                    <li>Refresh this page</li>
+                                </ol>
+                                <p style="color: #f59e0b; margin-top: 20px;">
+                                    <strong>Tip:</strong> You can run the <code>download-audio.ps1</code> script to download some sample sounds.
+                                </p>
+                                <p style="color: #10b981; margin-top: 20px;">
+                                    <strong>Debug:</strong> Check browser console for detailed information about file checking.
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Play sound function
+            async function playSound(soundId, button) {
+                const config = realAudioConfig.find(c => c.id === soundId);
+                if (!config) return;
+                
+                const volumeSlider = button.parentElement.querySelector('.volume-slider');
+                const volume = parseFloat(volumeSlider.value);
+                
+                playRealAudio(config.file, volume, button);
+            }
+            
+            // Play real audio file
+            function playRealAudio(filePath, volume, button) {
+                if (!audioElements[filePath]) {
+                    audioElements[filePath] = new Audio(filePath);
+                }
+                
+                const audio = audioElements[filePath];
+                audio.volume = volume;
+                audio.currentTime = 0;
+                
+                audio.play().then(() => {
+                    button.textContent = '⏸️ Playing...';
+                    button.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        button.textContent = '▶️ Play Sound';
+                        button.style.background = '#667eea';
+                    }, 3000);
+                }).catch(error => {
+                    console.error('Failed to play audio:', error);
+                    updateGlobalStatus('Failed to play audio file', 'error');
+                });
+            }
+            
+            // Stop all sounds
+            function stopAllSounds() {
+                // Stop all audio elements
+                Object.values(audioElements).forEach(audio => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+                
+                if (currentAlarm) {
+                    currentAlarm = null;
+                    if (alarmInterval) {
+                        clearInterval(alarmInterval);
+                        alarmInterval = null;
+                    }
+                }
+                updateGlobalStatus('All sounds stopped', 'info');
+            }
+            
+            // Test alarm loop
+            function testAlarmLoop() {
+                if (currentAlarm) {
+                    stopAllSounds();
+                    return;
+                }
+                
+                // Use the first available real audio file
+                const firstAudio = realAudioConfig[0];
+                if (firstAudio) {
+                    currentAlarm = { sound: firstAudio.id };
+                    const volume = 0.9;
+                    playRealAudio(firstAudio.file, volume);
+                    updateGlobalStatus(`Alarm loop started with ${firstAudio.name}. Click "Stop All Sounds" to stop.`, 'info');
+                } else {
+                    updateGlobalStatus('No audio files available for alarm loop', 'error');
+                }
+            }
+            
+            // Test random sound
+            function testRandomSound() {
+                const validAudios = realAudioConfig.filter(config => 
+                    audioElements[config.file] && audioElements[config.file].readyState >= 2
+                );
+                
+                if (validAudios.length === 0) {
+                    updateGlobalStatus('No audio files ready for random play', 'error');
+                    return;
+                }
+                
+                const randomAudio = validAudios[Math.floor(Math.random() * validAudios.length)];
+                const volume = 0.9;
+                
+                playRealAudio(randomAudio.file, volume);
+                updateGlobalStatus(`Playing random sound: ${randomAudio.name}`, 'info');
+            }
+            
+            // Update global status
+            function updateGlobalStatus(message, type) {
+                const status = document.getElementById('global-status');
+                status.textContent = message;
+                status.style.display = 'block';
+                
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Initialize on page load
+            window.addEventListener('load', () => {
+                initAudio();
+                generateSoundCards();
+            });
+            
+            // Enable audio on any interaction
+            document.addEventListener('click', function() {
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                    updateGlobalStatus('Audio context resumed!', 'success');
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
