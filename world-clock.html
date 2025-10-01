@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Clock - Time Zones & International Time Display</title>
+  <meta name="description" content="Free world clock showing time in multiple time zones. Track international time with popular cities and custom locations. Perfect for global coordination.">
+  <meta name="keywords" content="world clock, time zones, international time, global clock, timezone converter, world time, multiple clocks">
+  <meta name="author" content="Online Alarm">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://onlinealarmblogs.com/world-clock.html">
+  <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/world-clock.html">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "World Clock",
+    "description": "Free world clock with multiple time zones and international time display",
+    "url": "https://onlinealarmblogs.com/world-clock.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "featureList": [
+      "Multiple Time Zones",
+      "Popular Cities",
+      "Custom Locations",
+      "World Map Integration",
+      "Real-time Updates"
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+      color: #1e293b;
+    }
+
+    body.light-mode .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-mode .premium-shadow {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .gradient-text {
+      background: linear-gradient(135deg, #1e40af, #7c3aed, #dc2626, #ca8a04);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body.light-mode .search-input {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      color: #1e293b;
+    }
+
+    body.light-mode .search-input:focus {
+      background: rgba(255, 255, 255, 1);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    body.light-mode .search-input::placeholder {
+      color: #64748b;
+    }
+
+    body.light-mode .add-timezone-btn {
+      background: linear-gradient(135deg, #16a34a, #059669);
+    }
+
+    body.light-mode .timezone-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    body.light-mode .city-name {
+      background: linear-gradient(135deg, #1e40af, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body.light-mode .time-display {
+      text-shadow: 0 0 20px rgba(30, 64, 175, 0.3);
+      color: #1e40af;
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b;
+    }
+
+    body.light-mode .text-white {
+      color: #1e293b;
+    }
+
+    body.light-mode .text-blue-400 {
+      color: #2563eb;
+    }
+
+    body.light-mode .text-green-400 {
+      color: #16a34a;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .floating-animation {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .premium-shadow {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    
+    .timezone-card {
+      transition: all 0.3s ease;
+    }
+    
+    .timezone-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.6);
+    }
+    
+    .search-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    
+    .search-input:focus {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .time-display {
+      font-family: 'JetBrains Mono', monospace;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    
+    .city-name {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .add-timezone-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      transition: all 0.3s ease;
+    }
+    
+    .add-timezone-btn:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-premium:hover::before {
+      left: 100%;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white overflow-x-hidden dark-mode">
+  <!-- Back to Home Button - Top -->
+  <div class="fixed top-6 left-6 z-40">
+    <a 
+      href="index.html" 
+      class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span class="text-lg font-medium">Back to Home</span>
+    </a>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <div class="fixed top-6 right-6 z-40">
+    <button id="dark-mode-toggle" class="bg-gray-800/80 hover:bg-gray-700/80 text-white px-4 py-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 backdrop-blur-sm border border-gray-600/50 hover:border-blue-500/50 shadow-lg">
+      <svg id="dark-icon" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg id="light-icon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 0012 21a9 9 0 009-9 9 9 0 00-1.646-5.646z"></path>
+      </svg>
+      <span class="text-lg font-medium">Toggle Theme</span>
+    </button>
+  </div>
+
+  <!-- Header -->
+  <div class="text-center py-12">
+    <h1 class="text-5xl md:text-6xl font-bold gradient-text floating-animation mb-4">World Clock</h1>
+    <p class="text-xl text-gray-300 max-w-2xl mx-auto">Track time across multiple timezones with real-time updates</p>
+  </div>
+
+  <!-- Search and Add Section -->
+  <div class="max-w-6xl mx-auto px-6 mb-8">
+    <div class="glass-effect rounded-2xl p-6 premium-shadow">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <input 
+            type="text" 
+            id="city-search" 
+            placeholder="Search for a city or timezone..." 
+            class="search-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none transition-all duration-300 pr-12"
+          >
+          <button 
+            id="clear-search" 
+            onclick="clearSearch()" 
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors hidden"
+            title="Clear search"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <button 
+          onclick="addCustomTimezone()" 
+          class="add-timezone-btn px-6 py-3 rounded-xl text-white font-semibold shadow-lg"
+        >
+          Add Timezone
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Cities Grid -->
+  <div class="max-w-6xl mx-auto px-6 mb-12">
+    <h2 class="text-2xl font-bold text-white mb-6 text-center">Popular Cities</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="popular-cities">
+      <!-- Cities will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Custom Timezones -->
+  <div class="max-w-6xl mx-auto px-6 mb-12">
+    <h2 class="text-2xl font-bold text-white mb-6 text-center">Custom Timezones</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="custom-timezones">
+      <!-- Custom timezones will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <!-- World Map Section -->
+  <div class="max-w-6xl mx-auto px-6 mb-12">
+    <h2 class="text-2xl font-bold text-white mb-6 text-center">World Map & Timezones</h2>
+    <div class="glass-effect rounded-2xl p-6 premium-shadow">
+      <div class="text-center mb-6">
+        <p class="text-gray-300 mb-4">Click on regions to see timezone information</p>
+        <div class="flex flex-wrap justify-center gap-4 text-sm">
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+            <span class="text-gray-300">UTC-12 to UTC-8</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+            <span class="text-gray-300">UTC-7 to UTC-1</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+            <span class="text-gray-300">UTC+0 to UTC+4</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-4 h-4 bg-red-500 rounded mr-2"></div>
+            <span class="text-gray-300">UTC+5 to UTC+12</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative overflow-hidden rounded-xl bg-gray-900/50 p-4">
+        <div id="world-map-container" class="relative">
+          <!-- World Map SVG will be inserted here -->
+        </div>
+        
+        <!-- Timezone Info Panel -->
+        <div id="timezone-info" class="absolute top-4 right-4 glass-effect rounded-xl p-4 max-w-xs hidden">
+          <h4 id="region-name" class="text-lg font-bold text-white mb-2">Region Name</h4>
+          <div id="region-time" class="text-2xl font-mono text-blue-400 mb-2">--:--:--</div>
+          <div id="region-date" class="text-sm text-gray-400 mb-2">--</div>
+          <div id="region-utc" class="text-sm text-green-400">UTC --</div>
+          <button onclick="closeTimezoneInfo()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Timezone Modal -->
+  <div id="timezone-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="glass-effect rounded-2xl p-8 premium-shadow max-w-md w-full">
+        <h3 class="text-2xl font-bold text-white mb-6">Add Custom Timezone</h3>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2">City Name</label>
+            <input 
+              type="text" 
+              id="modal-city" 
+              placeholder="e.g., Tokyo, London" 
+              class="search-input w-full px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none"
+            >
+          </div>
+          
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2">Timezone</label>
+            <select id="modal-timezone" class="search-input w-full px-4 py-3 rounded-xl text-white focus:outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E');">
+              <option value="" class="text-gray-700 bg-white">Select timezone...</option>
+              <option value="UTC-12" class="text-gray-700 bg-white hover:bg-gray-100">UTC-12 (Baker Island)</option>
+              <option value="UTC-11" class="text-gray-700 bg-white hover:bg-gray-100">UTC-11 (Samoa)</option>
+              <option value="UTC-10" class="text-gray-700 bg-white hover:bg-gray-100">UTC-10 (Hawaii)</option>
+              <option value="UTC-9" class="text-gray-700 bg-white hover:bg-gray-100">UTC-9 (Alaska)</option>
+              <option value="UTC-8" class="text-gray-700 bg-white hover:bg-gray-100">UTC-8 (Pacific Time)</option>
+              <option value="UTC-7" class="text-gray-700 bg-white hover:bg-gray-100">UTC-7 (Mountain Time)</option>
+              <option value="UTC-6" class="text-gray-700 bg-white hover:bg-gray-100">UTC-6 (Central Time)</option>
+              <option value="UTC-5" class="text-gray-700 bg-white hover:bg-gray-100">UTC-5 (Eastern Time)</option>
+              <option value="UTC-4" class="text-gray-700 bg-white hover:bg-gray-100">UTC-4 (Atlantic Time)</option>
+              <option value="UTC-3" class="text-gray-700 bg-white hover:bg-gray-100">UTC-3 (Brazil)</option>
+              <option value="UTC-2" class="text-gray-700 bg-white hover:bg-gray-100">UTC-2 (South Georgia)</option>
+              <option value="UTC-1" class="text-gray-700 bg-white hover:bg-gray-100">UTC-1 (Azores)</option>
+              <option value="UTC+0" class="text-gray-700 bg-white hover:bg-gray-100">UTC+0 (London)</option>
+              <option value="UTC+1" class="text-gray-700 bg-white hover:bg-gray-100">UTC+1 (Paris)</option>
+              <option value="UTC+2" class="text-gray-700 bg-white hover:bg-gray-100">UTC+2 (Cairo)</option>
+              <option value="UTC+3" class="text-gray-700 bg-white hover:bg-gray-100">UTC+3 (Moscow)</option>
+              <option value="UTC+4" class="text-gray-700 bg-white hover:bg-gray-100">UTC+4 (Dubai)</option>
+              <option value="UTC+5" class="text-gray-700 bg-white hover:bg-gray-100">UTC+5 (Tashkent)</option>
+              <option value="UTC+5:30" class="text-gray-700 bg-white hover:bg-gray-100">UTC+5:30 (Mumbai)</option>
+              <option value="UTC+6" class="text-gray-700 bg-white hover:bg-gray-100">UTC+6 (Dhaka)</option>
+              <option value="UTC+7" class="text-gray-700 bg-white hover:bg-gray-100">UTC+7 (Bangkok)</option>
+              <option value="UTC+8" class="text-gray-700 bg-white hover:bg-gray-100">UTC+8 (Beijing)</option>
+              <option value="UTC+9" class="text-gray-700 bg-white hover:bg-gray-100">UTC+9 (Tokyo)</option>
+              <option value="UTC+10" class="text-gray-700 bg-white hover:bg-gray-100">UTC+10 (Sydney)</option>
+              <option value="UTC+11" class="text-gray-700 bg-white hover:bg-gray-100">UTC+11 (Solomon Islands)</option>
+              <option value="UTC+12" class="text-gray-700 bg-white hover:bg-gray-100">UTC+12 (New Zealand)</option>
+            </select>
+          </div>
+          
+          <div class="flex gap-3 pt-4">
+            <button 
+              onclick="saveCustomTimezone()" 
+              class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-semibold transition-colors"
+            >
+              Add
+            </button>
+            <button 
+              onclick="closeTimezoneModal()" 
+              class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-3 rounded-xl font-semibold transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Home Button -->
+  <div class="text-center mb-12">
+    <a 
+      href="index.html" 
+      class="inline-flex items-center glass-effect rounded-xl px-6 py-3 premium-shadow hover:scale-105 transition-all duration-300"
+    >
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to Home
+    </a>
+  </div>
+
+  <!-- How to Use Guide Section -->
+  <div class="max-w-6xl mx-auto p-6">
+    <div class="glass-effect rounded-3xl p-8 mt-12 premium-shadow">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">How to Use the World Clock</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Popular Cities -->
+        <div class="bg-gradient-to-br from-blue-500/10 to-blue-600/20 rounded-2xl p-6 border border-blue-500/20">
+          <div class="text-3xl mb-4">🌆</div>
+          <h3 class="text-xl font-bold text-blue-400 mb-4">Browse Popular Cities</h3>
+          <ol class="text-gray-300 space-y-3 text-sm list-decimal list-inside">
+            <li><strong>View Grid:</strong> Browse the grid of popular world cities</li>
+            <li><strong>Real-time Updates:</strong> See live time updates every second</li>
+            <li><strong>Time Zone Info:</strong> View UTC offset and local time for each city</li>
+            <li><strong>Add to Custom:</strong> Click any city to add it to your custom list</li>
+            <li><strong>Major Cities:</strong> Includes London, New York, Tokyo, Sydney, and more</li>
+          </ol>
+        </div>
+
+        <!-- Custom Timezones -->
+        <div class="bg-gradient-to-br from-green-500/10 to-green-600/20 rounded-2xl p-6 border border-green-500/20">
+          <div class="text-3xl mb-4">⚙️</div>
+          <h3 class="text-xl font-bold text-green-400 mb-4">Add Custom Timezones</h3>
+          <ol class="text-gray-300 space-y-3 text-sm list-decimal list-inside">
+            <li><strong>Search Cities:</strong> Use the search box to find any city worldwide</li>
+            <li><strong>Select Timezone:</strong> Choose from the dropdown of available timezones</li>
+            <li><strong>Add to List:</strong> Click "Add Timezone" to add it to your personal list</li>
+            <li><strong>Remove Items:</strong> Click the X button to remove unwanted timezones</li>
+            <li><strong>Unlimited Cities:</strong> Add as many cities as you need</li>
+          </ol>
+        </div>
+
+        <!-- World Map -->
+        <div class="bg-gradient-to-br from-purple-500/10 to-purple-600/20 rounded-2xl p-6 border border-purple-500/20">
+          <div class="text-3xl mb-4">🗺️</div>
+          <h3 class="text-xl font-bold text-purple-400 mb-4">Interactive World Map</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Click Regions:</strong> Click on map regions to see timezone information</li>
+            <li><strong>Visual Reference:</strong> See time zones laid out geographically</li>
+            <li><strong>Day/Night Zones:</strong> Visual representation of day and night regions</li>
+            <li><strong>Quick Selection:</strong> Fast way to find timezones by location</li>
+            <li><strong>Educational Tool:</strong> Learn about global time zone distribution</li>
+          </ul>
+        </div>
+
+        <!-- Business Use Cases -->
+        <div class="bg-gradient-to-br from-yellow-500/10 to-yellow-600/20 rounded-2xl p-6 border border-yellow-500/20">
+          <div class="text-3xl mb-4">💼</div>
+          <h3 class="text-xl font-bold text-yellow-400 mb-4">Professional Applications</h3>
+          <ul class="text-gray-300 space-y-3 text-sm">
+            <li><strong>Global Teams:</strong> Coordinate with remote team members worldwide</li>
+            <li><strong>Meeting Planning:</strong> Schedule meetings across multiple time zones</li>
+            <li><strong>Trading Hours:</strong> Track stock market hours globally</li>
+            <li><strong>Customer Support:</strong> Know when customers are likely to be awake</li>
+            <li><strong>Travel Planning:</strong> Prepare for trips by checking destination time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20">
+        <h4 class="text-lg font-bold text-blue-400 mb-3">🌍 Global Coordination Made Easy</h4>
+        <div class="text-gray-300 text-sm space-y-2">
+          <p><strong>Real-time Updates:</strong> All clocks update every second for accurate global time tracking</p>
+          <p><strong>Daylight Saving:</strong> Automatically handles daylight saving time changes worldwide</p>
+          <p><strong>UTC Reference:</strong> All times show UTC offset for easy calculation and reference</p>
+          <p><strong>Mobile Friendly:</strong> Optimized for smartphones and tablets for on-the-go time checking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Popular cities data
+    const popularCities = [
+      { name: 'New York', timezone: 'America/New_York', offset: -5 },
+      { name: 'London', timezone: 'Europe/London', offset: 0 },
+      { name: 'Tokyo', timezone: 'Asia/Tokyo', offset: 9 },
+      { name: 'Paris', timezone: 'Europe/Paris', offset: 1 },
+      { name: 'Sydney', timezone: 'Australia/Sydney', offset: 10 },
+      { name: 'Dubai', timezone: 'Asia/Dubai', offset: 4 },
+      { name: 'Mumbai', timezone: 'Asia/Kolkata', offset: 5.5 },
+      { name: 'Beijing', timezone: 'Asia/Shanghai', offset: 8 },
+      { name: 'Los Angeles', timezone: 'America/Los_Angeles', offset: -8 },
+      { name: 'Berlin', timezone: 'Europe/Berlin', offset: 1 },
+      { name: 'Moscow', timezone: 'Europe/Moscow', offset: 3 },
+      { name: 'Singapore', timezone: 'Asia/Singapore', offset: 8 }
+    ];
+
+    // Custom timezones storage
+    let customTimezones = JSON.parse(localStorage.getItem('customTimezones') || '[]');
+
+    // Initialize the page
+    function initWorldClock() {
+      renderPopularCities();
+      renderCustomTimezones();
+      updateAllTimes();
+      
+      // Update times every second
+      setInterval(updateAllTimes, 1000);
+    }
+
+    // Render popular cities
+    function renderPopularCities() {
+      const container = document.getElementById('popular-cities');
+      container.innerHTML = popularCities.map(city => `
+        <div class="timezone-card glass-effect rounded-2xl p-6 premium-shadow">
+          <div class="text-center">
+            <h3 class="city-name text-xl font-bold mb-2">${city.name}</h3>
+            <div class="time-display text-3xl font-bold mb-2" id="time-${city.name.replace(/\s+/g, '-')}">--:--:--</div>
+            <div class="text-gray-400 text-sm" id="date-${city.name.replace(/\s+/g, '-')}">--</div>
+            <div class="text-blue-400 text-sm mt-2">UTC${city.offset >= 0 ? '+' : ''}${city.offset}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render custom timezones
+    function renderCustomTimezones() {
+      const container = document.getElementById('custom-timezones');
+      if (customTimezones.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center text-gray-400 py-12">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-lg">No custom timezones added yet</p>
+            <p class="text-sm">Click "Add Timezone" to get started</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = customTimezones.map(tz => `
+        <div class="timezone-card glass-effect rounded-2xl p-6 premium-shadow">
+          <div class="text-center">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="city-name text-xl font-bold">${tz.city}</h3>
+              <button 
+                onclick="removeCustomTimezone('${tz.id}')" 
+                class="text-red-400 hover:text-red-300 transition-colors"
+                title="Remove timezone"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="time-display text-3xl font-bold mb-2" id="custom-time-${tz.id}">--:--:--</div>
+            <div class="text-gray-400 text-sm" id="custom-date-${tz.id}">--</div>
+            <div class="text-blue-400 text-sm mt-2">${tz.timezone}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Update all times
+    function updateAllTimes() {
+      const now = new Date();
+      
+      // Update popular cities
+      popularCities.forEach(city => {
+        const cityTime = new Date(now.getTime() + (city.offset * 60 * 60 * 1000));
+        const timeId = `time-${city.name.replace(/\s+/g, '-')}`;
+        const dateId = `date-${city.name.replace(/\s+/g, '-')}`;
+        
+        const timeElement = document.getElementById(timeId);
+        const dateElement = document.getElementById(dateId);
+        
+        if (timeElement) {
+          timeElement.textContent = cityTime.toLocaleTimeString('en-US', { 
+            hour12: false, 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+          });
+        }
+        
+        if (dateElement) {
+          dateElement.textContent = cityTime.toLocaleDateString('en-US', { 
+            weekday: 'short', 
+            month: 'short', 
+            day: 'numeric' 
+          });
+        }
+      });
+
+      // Update custom timezones
+      customTimezones.forEach(tz => {
+        const offset = parseTimezoneOffset(tz.timezone);
+        const customTime = new Date(now.getTime() + (offset * 60 * 60 * 1000));
+        
+        const timeElement = document.getElementById(`custom-time-${tz.id}`);
+        const dateElement = document.getElementById(`custom-date-${tz.id}`);
+        
+        if (timeElement) {
+          timeElement.textContent = customTime.toLocaleTimeString('en-US', { 
+            hour12: false, 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+          });
+        }
+        
+        if (dateElement) {
+          dateElement.textContent = customTime.toLocaleDateString('en-US', { 
+            weekday: 'short', 
+            month: 'short', 
+            day: 'numeric' 
+          });
+        }
+      });
+    }
+
+    // Parse timezone offset from string
+    function parseTimezoneOffset(timezoneStr) {
+      const match = timezoneStr.match(/UTC([+-]?\d+(?::\d+)?)/);
+      if (match) {
+        const offset = match[1];
+        if (offset.includes(':')) {
+          const [hours, minutes] = offset.split(':');
+          return parseFloat(hours) + (parseFloat(minutes) / 60);
+        }
+        return parseFloat(offset);
+      }
+      return 0;
+    }
+
+    // Show timezone modal
+    function addCustomTimezone() {
+      document.getElementById('timezone-modal').classList.remove('hidden');
+    }
+
+    // Close timezone modal
+    function closeTimezoneModal() {
+      document.getElementById('timezone-modal').classList.add('hidden');
+      document.getElementById('modal-city').value = '';
+      document.getElementById('modal-timezone').value = '';
+    }
+
+    // Save custom timezone
+    function saveCustomTimezone() {
+      const city = document.getElementById('modal-city').value.trim();
+      const timezone = document.getElementById('modal-timezone').value;
+      
+      if (!city || !timezone) {
+        alert('Please fill in both city name and timezone');
+        return;
+      }
+      
+      const newTimezone = {
+        id: Date.now().toString(),
+        city: city,
+        timezone: timezone
+      };
+      
+      customTimezones.push(newTimezone);
+      localStorage.setItem('customTimezones', JSON.stringify(customTimezones));
+      
+      renderCustomTimezones();
+      closeTimezoneModal();
+    }
+
+    // Remove custom timezone
+    function removeCustomTimezone(id) {
+      customTimezones = customTimezones.filter(tz => tz.id !== id);
+      localStorage.setItem('customTimezones', JSON.stringify(customTimezones));
+      renderCustomTimezones();
+    }
+
+    // Search functionality
+    document.getElementById('city-search').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      
+      // Update clear search button visibility
+      const clearSearchBtn = document.getElementById('clear-search');
+      if (searchTerm) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+
+      // Search through popular cities
+      const popularCitiesContainer = document.getElementById('popular-cities');
+      const popularCityCards = popularCitiesContainer.querySelectorAll('.timezone-card');
+      
+      popularCityCards.forEach(card => {
+        const cityName = card.querySelector('.city-name').textContent.toLowerCase();
+        if (cityName.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // Search through custom timezones
+      const customTimezonesContainer = document.getElementById('custom-timezones');
+      const customTimezoneCards = customTimezonesContainer.querySelectorAll('.timezone-card');
+      
+      customTimezoneCards.forEach(card => {
+        const cityName = card.querySelector('.city-name').textContent.toLowerCase();
+        if (cityName.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // Show "no results" message if nothing matches
+      showNoResultsMessage(searchTerm, popularCityCards, customTimezoneCards);
+    });
+
+    // Clear search functionality
+    function clearSearch() {
+      document.getElementById('city-search').value = '';
+      document.getElementById('clear-search').classList.add('hidden');
+      
+      // Show all cities and timezones
+      const allCards = document.querySelectorAll('.timezone-card');
+      allCards.forEach(card => {
+        card.style.display = 'block';
+      });
+      
+      // Remove no results message if it exists
+      const noResultsDiv = document.getElementById('no-search-results');
+      if (noResultsDiv) {
+        noResultsDiv.remove();
+      }
+    }
+
+    // Show no results message
+    function showNoResultsMessage(searchTerm, popularCityCards, customTimezoneCards) {
+      const noResultsDiv = document.getElementById('no-search-results');
+      
+      // Check if any results exist
+      const hasPopularResults = Array.from(popularCityCards).some(card => 
+        card.style.display !== 'none'
+      );
+      const hasCustomResults = Array.from(customTimezoneCards).some(card => 
+        card.style.display !== 'none'
+      );
+      
+      if (!searchTerm || (hasPopularResults || hasCustomResults)) {
+        if (noResultsDiv) {
+          noResultsDiv.remove();
+        }
+        return;
+      }
+      
+      if (!noResultsDiv) {
+        const messageDiv = document.createElement('div');
+        messageDiv.id = 'no-search-results';
+        messageDiv.className = 'col-span-full text-center text-gray-400 py-12';
+        messageDiv.innerHTML = `
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <p class="text-lg">No cities found for "${searchTerm}"</p>
+          <p class="text-sm">Try searching for a different city or add it as a custom timezone</p>
+        `;
+        
+        // Insert after the search section
+        const searchSection = document.querySelector('.glass-effect.rounded-2xl.p-6');
+        if (searchSection) {
+          searchSection.parentNode.insertBefore(messageDiv, searchSection.nextSibling);
+        }
+      }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('timezone-modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeTimezoneModal();
+      }
+    });
+
+    // World Map functionality
+    function initWorldMap() {
+      const container = document.getElementById('world-map-container');
+      
+      // Create world map with image and clickable overlay regions
+      const mapWrapper = document.createElement('div');
+      mapWrapper.className = 'relative w-full h-auto';
+      
+      // Add world map image - using a simple world map
+      const worldMapImg = document.createElement('img');
+      worldMapImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png';
+      worldMapImg.alt = 'World Map';
+      worldMapImg.className = 'w-full h-auto rounded-lg';
+      worldMapImg.style.cursor = 'pointer';
+      worldMapImg.onerror = function() {
+        // Fallback to a simple colored world map if external image fails
+        this.style.display = 'none';
+        createFallbackWorldMap(container);
+      };
+      
+      mapWrapper.appendChild(worldMapImg);
+      container.appendChild(mapWrapper);
+      
+      // Add clickable overlay regions
+      addClickableRegions(mapWrapper);
+    }
+
+    // Create fallback world map if external image fails
+    function createFallbackWorldMap(container) {
+      const fallbackMap = document.createElement('div');
+      fallbackMap.className = 'w-full h-96 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg relative overflow-hidden';
+      
+      // Add simple continent shapes as colored divs
+      const continents = [
+        { name: 'North America', color: 'from-green-500 to-green-600', position: 'absolute top-8 left-8 w-32 h-24', timezone: 'UTC-8 to UTC-5' },
+        { name: 'South America', color: 'from-green-600 to-green-700', position: 'absolute top-40 left-16 w-24 h-32', timezone: 'UTC-5 to UTC-3' },
+        { name: 'Europe', color: 'from-yellow-500 to-yellow-600', position: 'absolute top-12 right-1/2 w-20 h-16', timezone: 'UTC+0 to UTC+2' },
+        { name: 'Africa', color: 'from-yellow-600 to-yellow-700', position: 'absolute top-32 right-1/2 w-20 h-32', timezone: 'UTC+0 to UTC+2' },
+        { name: 'Asia', color: 'from-red-500 to-red-600', position: 'absolute top-8 right-8 w-40 h-32', timezone: 'UTC+5 to UTC+9' },
+        { name: 'Australia', color: 'from-red-600 to-red-700', position: 'absolute bottom-8 right-8 w-32 h-20', timezone: 'UTC+8 to UTC+10' }
+      ];
+      
+      continents.forEach(continent => {
+        const continentDiv = document.createElement('div');
+        continentDiv.className = `bg-gradient-to-br ${continent.color} rounded-lg cursor-pointer transition-all duration-300 hover:scale-105 ${continent.position}`;
+        continentDiv.setAttribute('data-name', continent.name);
+        continentDiv.setAttribute('data-timezone', continent.timezone);
+        continentDiv.addEventListener('click', () => showCountryInfo({
+          name: continent.name,
+          timezone: continent.timezone,
+          region: continent.name
+        }));
+        
+        // Add continent label
+        const label = document.createElement('div');
+        label.className = 'absolute inset-0 flex items-center justify-center text-white text-xs font-bold text-center px-1';
+        label.textContent = continent.name;
+        continentDiv.appendChild(label);
+        
+        fallbackMap.appendChild(continentDiv);
+      });
+      
+      container.appendChild(fallbackMap);
+    }
+
+    // Add clickable regions overlay
+    function addClickableRegions(mapWrapper) {
+      // Define clickable regions with coordinates
+      const regions = [
+        { name: 'North America', timezone: 'UTC-8 to UTC-5', region: 'North America', coords: { x: 0.15, y: 0.25, width: 0.25, height: 0.25 } },
+        { name: 'South America', timezone: 'UTC-5 to UTC-3', region: 'South America', coords: { x: 0.20, y: 0.55, width: 0.20, height: 0.30 } },
+        { name: 'Europe', timezone: 'UTC+0 to UTC+2', region: 'Europe', coords: { x: 0.48, y: 0.20, width: 0.15, height: 0.15 } },
+        { name: 'Africa', timezone: 'UTC+0 to UTC+2', region: 'Africa', coords: { x: 0.48, y: 0.35, width: 0.15, height: 0.35 } },
+        { name: 'Asia', timezone: 'UTC+5 to UTC+9', region: 'Asia', coords: { x: 0.65, y: 0.15, width: 0.30, height: 0.30 } },
+        { name: 'Australia', timezone: 'UTC+8 to UTC+10', region: 'Oceania', coords: { x: 0.75, y: 0.65, width: 0.20, height: 0.20 } }
+      ];
+      
+      // Add invisible clickable overlays
+      regions.forEach(region => {
+        const overlay = document.createElement('div');
+        overlay.className = 'absolute border-2 border-transparent hover:border-white/50 transition-all duration-300 cursor-pointer';
+        overlay.style.left = `${region.coords.x * 100}%`;
+        overlay.style.top = `${region.coords.y * 100}%`;
+        overlay.style.width = `${region.coords.width * 100}%`;
+        overlay.style.height = `${region.coords.height * 100}%`;
+        
+        overlay.addEventListener('click', () => showCountryInfo(region));
+        overlay.addEventListener('mouseenter', () => {
+          overlay.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        });
+        overlay.addEventListener('mouseleave', () => {
+          overlay.style.backgroundColor = 'transparent';
+        });
+        
+        mapWrapper.appendChild(overlay);
+      });
+    }
+
+    // Function to determine which region was clicked
+    function getRegionFromCoordinates(x, y, mapWidth, mapHeight) {
+      const normalizedX = x / mapWidth;
+      const normalizedY = y / mapHeight;
+      
+      // Define clickable regions based on normalized coordinates
+      if (normalizedX >= 0.12 && normalizedX <= 0.33 && normalizedY >= 0.12 && normalizedY <= 0.40) {
+        return { name: 'United States', timezone: 'UTC-8 to UTC-5', region: 'North America' };
+      } else if (normalizedX >= 0.12 && normalizedX <= 0.32 && normalizedY >= 0.10 && normalizedY <= 0.26) {
+        return { name: 'Canada', timezone: 'UTC-8 to UTC-5', region: 'North America' };
+      } else if (normalizedX >= 0.20 && normalizedX <= 0.31 && normalizedY >= 0.56 && normalizedY <= 0.66) {
+        return { name: 'Brazil', timezone: 'UTC-5 to UTC-3', region: 'South America' };
+      } else if (normalizedX >= 0.48 && normalizedX <= 0.55 && normalizedY >= 0.22 && normalizedY <= 0.36) {
+        return { name: 'Europe', timezone: 'UTC+0 to UTC+2', region: 'Europe' };
+      } else if (normalizedX >= 0.48 && normalizedX <= 0.55 && normalizedY >= 0.38 && normalizedY <= 0.68) {
+        return { name: 'Africa', timezone: 'UTC+0 to UTC+2', region: 'Africa' };
+      } else if (normalizedX >= 0.58 && normalizedX <= 0.88 && normalizedY >= 0.10 && normalizedY <= 0.22) {
+        return { name: 'Asia', timezone: 'UTC+5 to UTC+9', region: 'Asia' };
+      } else if (normalizedX >= 0.80 && normalizedX <= 0.92 && normalizedY >= 0.64 && normalizedY <= 0.80) {
+        return { name: 'Australia', timezone: 'UTC+8 to UTC+10', region: 'Oceania' };
+      }
+      
+      return null;
+    }
+
+    // Show country information panel
+    function showCountryInfo(country) {
+      const infoPanel = document.getElementById('timezone-info');
+      const regionName = document.getElementById('region-name');
+      const regionTime = document.getElementById('region-time');
+      const regionDate = document.getElementById('region-date');
+      const regionUtc = document.getElementById('region-utc');
+      
+      // Calculate time for this country
+      const now = new Date();
+      let offset = 0;
+      
+      if (country.timezone.includes('UTC-')) {
+        offset = -parseInt(country.timezone.match(/UTC-(\d+)/)[1]);
+      } else if (country.timezone.includes('UTC+')) {
+        const match = country.timezone.match(/UTC\+(\d+(?::\d+)?)/);
+        if (match) {
+          if (match[1].includes(':')) {
+            const [hours, minutes] = match[1].split(':');
+            offset = parseFloat(hours) + (parseFloat(minutes) / 60);
+          } else {
+            offset = parseFloat(match[1]);
+          }
+        }
+      }
+      
+      const countryTimeDate = new Date(now.getTime() + (offset * 60 * 60 * 1000));
+      
+      // Update panel content
+      regionName.textContent = country.name;
+      regionTime.textContent = countryTimeDate.toLocaleTimeString('en-US', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      });
+      regionDate.textContent = countryTimeDate.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      regionUtc.textContent = country.timezone;
+      
+      // Show panel
+      infoPanel.classList.remove('hidden');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        if (!infoPanel.matches(':hover')) {
+          closeTimezoneInfo();
+        }
+      }, 5000);
+    }
+
+    // Close timezone info panel
+    function closeTimezoneInfo() {
+      document.getElementById('timezone-info').classList.add('hidden');
+    }
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkIcon = document.getElementById('dark-icon');
+    const lightIcon = document.getElementById('light-icon');
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.classList.contains('dark-mode');
+      
+      if (isDark) {
+        // Switch to light mode
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        
+        // Update icons
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      } else {
+        // Switch to dark mode
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        
+        // Update icons
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+      }
+    }
+
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+
+    // Theme on load
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        // Light mode
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+        }
+      } else {
+        // Dark mode (default)
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        }
+      }
+    })();
+
+    // Initialize world map when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      initWorldClock();
+      initWorldMap();
+    });
+
+    // Update copyright year
+    function updateCurrentYear() {
+      const yearElement = document.getElementById('current-year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+    }
+    
+    // Update year when page loads
+    document.addEventListener('DOMContentLoaded', updateCurrentYear);
+  </script>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold gradient-text mb-4">Online Alarm</h3>
+          <p class="text-gray-300 mb-4 leading-relaxed">
+            Free online time management tools including alarm clock, timer, stopwatch, countdown, and world clock. 
+            No download required - works on all devices with precision timing.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+            </a>
+            <a href="#" class="text-gray-200 hover:text-blue-400 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Tools</h4>
+          <ul class="space-y-2">
+            <li><a href="online-alarm.html" class="text-gray-200 hover:text-blue-400 transition-colors">Alarm Clock</a></li>
+            <li><a href="online-timer.html" class="text-gray-200 hover:text-blue-400 transition-colors">Timer</a></li>
+            <li><a href="online-stopwatch.html" class="text-gray-200 hover:text-blue-400 transition-colors">Stopwatch</a></li>
+            <li><a href="online-countdown.html" class="text-gray-200 hover:text-blue-400 transition-colors">Countdown</a></li>
+            <li><a href="world-clock.html" class="text-gray-200 hover:text-blue-400 transition-colors">World Clock</a></li>
+            <li><a href="date-calculator.html" class="text-gray-200 hover:text-blue-400 transition-colors">Date Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Support & Legal -->
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li><a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact & Support</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          © <span id="current-year"></span> Online Alarm. All rights reserved. Free online time tools for everyone.
+        </p>
+        <div class="flex space-x-6 mt-4 md:mt-0 text-sm">
+          <a href="privacy-policy.html" class="text-gray-200 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="terms-conditions.html" class="text-gray-200 hover:text-blue-400 transition-colors">Terms</a>
+          <a href="contact.html" class="text-gray-200 hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

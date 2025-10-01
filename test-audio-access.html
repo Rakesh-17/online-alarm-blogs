@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Access Test</title>
+    <meta name="description" content="Test audio access permissions for Online Alarm. Check if your browser allows audio playback for alarm sounds.">
+    <meta name="keywords" content="audio access test, browser permissions, sound permissions, audio verification">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onlinealarmblogs.com/test-audio-access.html">
+    <link rel="alternate" hreflang="en" href="https://onlinealarmblogs.com/test-audio-access.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+        }
+        .audio-test {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .success { border-left: 4px solid #10b981; }
+        .error { border-left: 4px solid #ef4444; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #5a6fd8; }
+    </style>
+</head>
+<body>
+    <h1>🔊 Audio File Access Test</h1>
+    <p>Testing if audio files can be accessed and played...</p>
+    
+    <div id="results"></div>
+    
+    <script>
+        const audioFiles = [
+            'audio/iphone_alarm.mp3',
+            'audio/nokia_ringtone.mp3',
+            'audio/playstation_startup.mp3',
+            'audio/alarm_1.mp3',
+            'audio/alarm_2.mp3',
+            'audio/alarm_3.mp3'
+        ];
+        
+        const resultsDiv = document.getElementById('results');
+        
+        async function testAudioFile(filePath) {
+            const div = document.createElement('div');
+            div.className = 'audio-test';
+            div.innerHTML = `<h3>Testing: ${filePath}</h3>`;
+            resultsDiv.appendChild(div);
+            
+            try {
+                const audio = new Audio(filePath);
+                
+                return new Promise((resolve) => {
+                    let hasResolved = false;
+                    
+                    const resolveOnce = (result) => {
+                        if (!hasResolved) {
+                            hasResolved = true;
+                            resolve(result);
+                        }
+                    };
+                    
+                    audio.addEventListener('canplaythrough', () => {
+                        div.classList.add('success');
+                        div.innerHTML += `
+                            <p>✅ File accessible and valid</p>
+                            <button onclick="playAudio('${filePath}')">▶️ Play Sound</button>
+                        `;
+                        resolveOnce(true);
+                    });
+                    
+                    audio.addEventListener('error', (e) => {
+                        div.classList.add('error');
+                        div.innerHTML += `<p>❌ Error: ${e.message || 'File not accessible'}</p>`;
+                        resolveOnce(false);
+                    });
+                    
+                    setTimeout(() => {
+                        if (!hasResolved) {
+                            div.classList.add('error');
+                            div.innerHTML += `<p>❌ Timeout: File took too long to load</p>`;
+                            resolveOnce(false);
+                        }
+                    }, 3000);
+                    
+                    audio.load();
+                });
+            } catch (error) {
+                div.classList.add('error');
+                div.innerHTML += `<p>❌ Exception: ${error.message}</p>`;
+                return false;
+            }
+        }
+        
+        function playAudio(filePath) {
+            const audio = new Audio(filePath);
+            audio.play().catch(e => {
+                console.error('Play failed:', e);
+                alert('Failed to play audio: ' + e.message);
+            });
+        }
+        
+        async function runTests() {
+            let successCount = 0;
+            
+            for (const file of audioFiles) {
+                const success = await testAudioFile(file);
+                if (success) successCount++;
+            }
+            
+            const summary = document.createElement('div');
+            summary.className = 'audio-test';
+            summary.style.background = successCount > 0 ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)';
+            summary.innerHTML = `
+                <h2>Test Summary</h2>
+                <p><strong>Successfully accessed:</strong> ${successCount} out of ${audioFiles.length} files</p>
+                ${successCount > 0 ? '<p>✅ Audio files are accessible!</p>' : '<p>❌ Audio files cannot be accessed</p>'}
+            `;
+            resultsDiv.appendChild(summary);
+        }
+        
+        // Run tests when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
+
